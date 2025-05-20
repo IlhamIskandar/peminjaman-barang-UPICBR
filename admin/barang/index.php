@@ -78,8 +78,9 @@ include "../koneksi.php";
                   </thead>
                   <tbody>
                     <?php
-                    $query = "select * from barang";
-                    $result = mysqli_query($koneksi, $query);
+                    $stmt = $conn->prepare("SELECT * FROM barang");
+                    $stmt->execute();
+                    $result = $stmt->get_result();
                     $n = 1;
                     while($data= mysqli_fetch_array($result)) {
                     ?>

@@ -1,9 +1,10 @@
 <?php
 include "../koneksi.php";
 if (isset($_GET['id'])) {
-  $id_barang = $_GET['id'];
-  $query = "SELECT * FROM barang WHERE id='$id_barang'";
-  $result = mysqli_query($koneksi, $query);
+  $stmt = $conn->prepare("SELECT * FROM barang WHERE id=?");
+  $stmt->bind_param("i", $_GET['id']);
+  $stmt->execute();
+  $result = $stmt->get_result();
   if (mysqli_num_rows($result) > 0) {
     $data = mysqli_fetch_assoc($result);
   } else {

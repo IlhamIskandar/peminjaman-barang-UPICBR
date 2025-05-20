@@ -6,13 +6,13 @@ $pass = "";
 $dbname = "peminjaman_barang";
 
 try {
-  $koneksi = mysqli_connect($host,$user,$pass,$dbname);
+  $conn = mysqli_connect($host,$user,$pass,$dbname);
 } catch (\Throwable $th) {
   throw $th;
 }
 
 
-if (!$koneksi){
+if (!$conn){
     echo "
     <script>
       alert('gagal mengambil data');

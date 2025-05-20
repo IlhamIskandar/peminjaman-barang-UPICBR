@@ -1,7 +1,6 @@
 <?php
 
 include "../koneksi.php";
-var_dump($_POST);
 
 $kode_barang = $_POST['kode'];
 $nama_barang = $_POST['nama'];
@@ -10,8 +9,10 @@ $kondisi_barang = $_POST['kondisi'];
 $deskripsi_barang = $_POST['deskripsi'];
 $tersedia_barang = $_POST['status'];
 
-$query = "INSERT INTO barang (kode_barang, nama, kategori, kondisi, deskripsi, tersedia) VALUES ('$kode_barang', '$nama_barang', '$kategori_barang', '$kondisi_barang', '$deskripsi_barang', '$tersedia_barang')";
-if (mysqli_query($koneksi, $query)) {
+$stmt = $conn->prepare("INSERT INTO barang (kode_barang, nama, kategori, kondisi, deskripsi, tersedia) VALUES (?, ?, ?, ?, ?, ?)");
+$stmt->bind_param("ssssss", $kode_barang, $nama_barang, $kategori_barang, $kondisi_barang, $deskripsi_barang, $tersedia_barang);
+
+if ($stmt->execute()) {
     echo "
     <script>
       alert('Berhasil menambah barang');

@@ -10,7 +10,7 @@ $deskripsi_barang = $_POST['deskripsi'];
 $tersedia_barang = $_POST['status'];
 
 $query = "UPDATE barang SET kode_barang='$kode_barang', nama='$nama_barang', kategori='$kategori_barang', kondisi='$kondisi_barang', deskripsi='$deskripsi_barang', tersedia='$tersedia_barang' WHERE id='$id_barang'";
-if (mysqli_query($koneksi, $query)) {
+if (mysqli_query($conn, $query)) {
     echo "
     <script>
       alert('Berhasil mengubah barang');
