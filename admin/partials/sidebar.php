@@ -35,12 +35,6 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a href="./generate/theme.html" class="nav-link">
-                  <i class="nav-icon bi bi-palette"></i>
-                  <p>Theme Generate</p>
-                </a>
-              </li>
-              <li class="nav-item">
                 <a href="#" class="nav-link">
                   <i class="nav-icon bi bi-box-seam-fill"></i>
                   <p>
@@ -61,7 +55,48 @@
                       <p>Tambah Barang</p>
                     </a>
                   </li>
+                  <li class="nav-item">
+                    <a href="../barang/kategori-barang.php" class="nav-link">
+                      <i class="nav-icon bi bi-circle"></i>
+                      <p>Kategori Barang</p>
+                    </a>
+                  </li>
                 </ul>
+              </li>
+              <li class="nav-item">
+                <a href="#" class="nav-link">
+                  <i class="nav-icon bi bi-box-seam-fill"></i>
+                  <p>
+                    Konfirmasi
+                    <i class="nav-arrow bi bi-chevron-right"></i>
+                  </p>
+                </a>
+                <ul class="nav nav-treeview">
+                  <li class="nav-item">
+                    <a href="../peminjaman-barang" class="nav-link" >
+                      <i class="nav-icon bi bi-circle"></i>
+                      <p>Peminjaman Barang</p>
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a href="../barang/pengembalian-barang.php" class="nav-link">
+                      <i class="nav-icon bi bi-circle"></i>
+                      <p>Pengembalian Barang</p>
+                    </a>
+                  </li>
+                </ul>
+              </li>
+              <li class="nav-item">
+                <a href="../pengguna" class="nav-link">
+                  <i class="nav-icon bi bi-speedometer"></i>
+                  <p>Pengguna</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="../Laporan" class="nav-link">
+                  <i class="nav-icon bi bi-speedometer"></i>
+                  <p>Laporan</p>
+                </a>
               </li>
             </ul>
             <!--end::Sidebar Menu-->

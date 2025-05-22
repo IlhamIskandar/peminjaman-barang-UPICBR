@@ -1,10 +1,23 @@
 <?php
 include "function.php";
 session_start();
-if (isset($_SESSION['login'])) {
-    header("Location: index.php");
-    exit;
+if (isset($_SESSION['role']) == 'admin') {
+    header("Location: admin/index.php");
+    return;
+} elseif (isset($_SESSION['role']) == 'user') {
+    header("Location: user/index.php");
+    return;
+
 }
+
+if(isset($_POST)){
+$email = $_POST['email'];
+$password = $_POST['password'];
+
+$sql = "SELECT * FROM users WHERE email = '$email' AND password = 'password_hash($password, PASSWORD_DEFAULT)'";
+
+}
+
 
 ?>
 
@@ -14,10 +27,10 @@ if (isset($_SESSION['login'])) {
   <!--begin::Head-->
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>AdminLTE 4 | Login Page</title>
+    <title>Peminjaman barang | Login Page</title>
     <!--begin::Primary Meta Tags-->
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="title" content="AdminLTE 4 | Login Page" />
+    <meta name="title" content="Peminjaman barang | Login Page" />
     <meta name="author" content="ColorlibHQ" />
     <meta
       name="description"
@@ -66,8 +79,8 @@ if (isset($_SESSION['login'])) {
       <!-- /.login-logo -->
       <div class="card">
         <div class="card-body login-card-body">
-          <p class="login-box-msg">Sign in to start your session</p>
-          <form action="../index3.html" method="post">
+          <p class="login-box-msg">Belum punya akun? <a class="small" href="register.php">Daftar</a></p>
+          <form action="" method="post">
             <div class="input-group mb-3">
               <input type="email" class="form-control" placeholder="Email" />
               <div class="input-group-text"><span class="bi bi-envelope"></span></div>
@@ -76,29 +89,18 @@ if (isset($_SESSION['login'])) {
               <input type="password" class="form-control" placeholder="Password" />
               <div class="input-group-text"><span class="bi bi-lock-fill"></span></div>
             </div>
-            <!--begin::Row-->
-            <div class="row">
-              <div class="col-8">
-                <div class="form-check">
-                  <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" />
-                  <label class="form-check-label" for="flexCheckDefault"> Remember Me </label>
-                </div>
-              </div>
+            <!-- /.social-auth-links -->
+          <a class="small" href="register.php">Lupa kata sandi? Hubungi admin</a>
               <!-- /.col -->
-              <div class="col-4">
-                <div class="d-grid gap-2">
-                  <button type="submit" class="btn btn-primary">Sign In</button>
+              <div class="col-12">
+                <div class="d-grid gap-2 justify-content-end">
+                  <button type="submit" class="btn btn-primary">Masuk</button>
                 </div>
               </div>
               <!-- /.col -->
             </div>
             <!--end::Row-->
           </form>
-          <!-- /.social-auth-links -->
-          <p class="mb-1"><a href="forgot-password.html">I forgot my password</a></p>
-          <p class="mb-0">
-            <a href="register.html" class="text-center"> Register a new membership </a>
-          </p>
         </div>
         <!-- /.login-card-body -->
       </div>

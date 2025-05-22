@@ -1,13 +1,65 @@
 <?php
 include "function.php";
 session_start();
-if (isset($_SESSION['username'])) {
-    header("Location: index.php");
-    exit;
+var_dump($_POST);
+if (isset($_SESSION['role']) == 'admin') {
+    header("Location: admin/index.php");
+    return;
+} elseif (isset($_SESSION['role']) == 'user') {
+    header("Location: user/index.php");
+    return;
 }
-// var_dump($_POST);
-// die();
-register();
+if(isset($_POST['confirm_password'])){
+  $nama_lengkap = $_POST['nama_lengkap'];
+    $nimnip = $_POST['nimnip'];
+    $email = $_POST['email'];
+    $password = $_POST['password'];
+    $confirm_password = $_POST['confirm_password'];
+    $role = 'peminjam';
+    // Check if password and confirm password match
+    if ($password !== $confirm_password) {
+        echo "<script>alert('Password dan konfirmasi password tidak cocok!');window.histroy.back();</script>";
+        return;
+    }
+    // Check if email already exists
+    $stmt = $conn->prepare("SELECT * FROM users WHERE email=?");
+    $stmt->bind_param("s", $email);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    if ($result->num_rows > 0) {
+        echo "<script>alert('Email sudah terdaftar!');window.histroy.back();</script>";
+        return;
+    }
+    // Check if NIM/NIP already exists
+    $stmt = $conn->prepare("SELECT * FROM users WHERE nim_nip=?");
+    $stmt->bind_param("s", $nimnip);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    if ($result->num_rows > 0) {
+        echo "<script>alert('NIM/NIP sudah terdaftar!');window.histroy.back();</script>";
+        return;
+    }
+
+    // Insert into database
+    $stmt = $conn->prepare("INSERT INTO users (username, nim_nip, email, password, role) VALUES (?, ?, ?, ?, ?)");
+    $stmt->bind_param("sssss", $nama_lengkap, $nimnip, $email, password_hash($password, PASSWORD_DEFAULT), $role);
+
+    if ($stmt->execute()) {
+        echo "
+        <script>
+        alert('Registrasi berhasil!');
+        window.location.href = 'login.php';
+        </script>";
+
+        return;
+    } else {
+        echo "
+        <script>
+        alert('Registrasi gagal!');
+        window.histroy.back();
+        </script>";
+    }
+}
 ?>
 
 <!doctype html>
@@ -18,7 +70,7 @@ register();
     <title>Peminjaman barang | Register Page</title>
     <!--begin::Primary Meta Tags-->
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="title" content="AdminLTE 4 | Register Page" />
+    <meta name="title" content="Peminjaman barang | Register Page" />
     <meta name="author" content="ColorlibHQ" />
     <meta
       name="description"
@@ -67,7 +119,7 @@ register();
       <!-- /.register-logo -->
       <div class="card">
         <div class="card-body register-card-body">
-          <p class="register-box-msg">Sudah punya Akun?</p>
+          <p class="register-box-msg">Sudah punya Akun?<a class="small" href="login.php">Masuk</a></p>
           <form action="" method="post">
             <div class="input-group mb-3">
               <input type="text" class="form-control" placeholder="Nama Lengkap" name="nama_lengkap" id="nama_lengkap" required />
@@ -92,9 +144,9 @@ register();
             <!--begin::Row-->
             <div class="row">
               <!-- /.col -->
-              <div class="col-4">
-                <div class="d-grid gap-2">
-                  <button type="submit" class="btn btn-primary">Sign In</button>
+              <div class="col-12">
+                <div class="d-grid gap-2 justify-content-end">
+                  <button type="submit" class="btn btn-primary">Daftar</button>
                 </div>
               </div>
               <!-- /.col -->

@@ -2,15 +2,17 @@
 include "../koneksi.php";
 
 $id_barang = $_POST['id'];
-$kode_barang = $_POST['kode'];
 $nama_barang = $_POST['nama'];
 $kategori_barang = $_POST['kategori'];
-$kondisi_barang = $_POST['kondisi'];
 $deskripsi_barang = $_POST['deskripsi'];
-$tersedia_barang = $_POST['status'];
+$stok = $_POST['stok'];
 
-$query = "UPDATE barang SET kode_barang='$kode_barang', nama='$nama_barang', kategori='$kategori_barang', kondisi='$kondisi_barang', deskripsi='$deskripsi_barang', tersedia='$tersedia_barang' WHERE id='$id_barang'";
-if (mysqli_query($conn, $query)) {
+$stmt = $conn->prepare("UPDATE barang SET nama_barang=?, id_kategori=?, deskripsi=?, stok=?  WHERE id_barang = ?");
+
+$stmt->bind_param("sssss", $nama_barang, $kategori_barang, $deskripsi_barang, $stok, $id_barang);
+
+
+if ($stmt->execute()) {
     echo "
     <script>
       alert('Berhasil mengubah barang');
