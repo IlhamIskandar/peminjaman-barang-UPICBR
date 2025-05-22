@@ -68,32 +68,37 @@ include "../koneksi.php";
               </div>
               <form class="card-body container" action="proses-tambah-barang.php" method="post">
                 <div class="row mb-3">
-                  <div class="col-3">
+                  <!-- <div class="col-3">
                     <label for="kode" class="form-label">Kode Barang</label>
                     <div class="input-group">
                       <span class="input-group-text" id="basic-addon1">#</span>
                       <input type="text" class="form-control" id="kode" name="kode" placeholder="Masukan kode barang" required>
                     </div>
-                  </div>
-                  <div class="col">
+                  </div> -->
+                  <div class="col-md-4">
                     <label for="nama" class="form-label">Nama Barang</label>
                     <input type="text" class="form-control" id="nama" name="nama" placeholder="Masukan nama barang" required>
                   </div>
                 </div>
                 <div class="row mb-3">
-                  <div class="col-3">
+                  <div class="col-4">
                     <label class="form-label">Kategori</label>
                     <select class="form-select" aria-label="Default select example" id="kategori" name="kategori" required>
                       <option selected disabled>Pilih Kategori</option>
-                      <option value="Alat Tulis">Alat Tulis</option>
-                      <option value="Projektor">Projektor</option>
-                      <option value="Lainnya">Lainnya</option>
+                      <?php
+                        $stmt = $conn->prepare("SELECT * FROM kategori");
+                        $stmt->execute();
+                        $result = $stmt->get_result();
+                        while ($row = mysqli_fetch_array($result)) {
+                          echo '<option value="' . htmlspecialchars($row['id_kategori']) . '">' . htmlspecialchars($row['nama_kategori']) . '</option>';
+                        }
+                      ?>
                     </select>
                   </div>
-                  <div class="col">
+                  <!-- <div class="col">
                     <label  class="form-label">Kondisi Barang</label>
                     <input type="text" class="form-control" id="kondisi" name="kondisi" placeholder="Jelaskan kondisi barang">
-                  </div>
+                  </div> -->
                 </div>
                 <div class="row">
                   <div class="mb-3 ">
@@ -102,13 +107,9 @@ include "../koneksi.php";
                   </div>
                 </div>
                 <div class="row">
-                  <div class="col-2 mb-3 ">
-                    <label class="form-label" for="status">Status Barang</label>
-                    <select class="form-select" id="status" name="status" required>
-                      <option value="Tersedia" selected>Tersedia</option>
-                      <option value="Dipinjam">Dipinjam</option>
-                      <option value="Tidak Tersedia">Tidak Tersedia</option>
-                    </select>
+                  <div class="col-md-2 mb-3 ">
+                    <label class="form-label" for="status">Stok Barang</label>
+                    <input type="text" class="form-control" id="stok " name="stok" placeholder="Masukan Jumlah" required>
                   </div>
                 </div>
                 <div class="row justify-content-end">

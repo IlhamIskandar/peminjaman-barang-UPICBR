@@ -2,15 +2,13 @@
 
 include "../koneksi.php";
 
-$kode_barang = $_POST['kode'];
 $nama_barang = $_POST['nama'];
 $kategori_barang = $_POST['kategori'];
-$kondisi_barang = $_POST['kondisi'];
 $deskripsi_barang = $_POST['deskripsi'];
-$tersedia_barang = $_POST['status'];
+$stok = $_POST['stok'];
 
-$stmt = $conn->prepare("INSERT INTO barang (kode_barang, nama, kategori, kondisi, deskripsi, tersedia) VALUES (?, ?, ?, ?, ?, ?)");
-$stmt->bind_param("ssssss", $kode_barang, $nama_barang, $kategori_barang, $kondisi_barang, $deskripsi_barang, $tersedia_barang);
+$stmt = $conn->prepare("INSERT INTO barang (nama_barang, id_kategori, deskripsi, stok) VALUES (?, ?, ?, ?)");
+$stmt->bind_param("ssss", $nama_barang, $kategori_barang, $deskripsi_barang, $stok);
 
 if ($stmt->execute()) {
     echo "

@@ -69,16 +69,15 @@ include "../koneksi.php";
                   <thead>
                     <tr>
                       <th>#</th>
-                      <th>Kode Barang</th>
                       <th>Nama Barang</th>
                       <th>Kategori</th>
-                      <th>Tersedia</th>
+                      <th>stok</th>
                       <th>Aksi</th>
                     </tr>
                   </thead>
                   <tbody>
                     <?php
-                    $stmt = $conn->prepare("SELECT * FROM barang");
+                    $stmt = $conn->prepare("SELECT * FROM barang b JOIN kategori k ON b.id_kategori = k.id_kategori");
                     $stmt->execute();
                     $result = $stmt->get_result();
                     $n = 1;
@@ -86,13 +85,12 @@ include "../koneksi.php";
                     ?>
                     <tr>
                       <th><?= $n?></th>
-                      <td><?= $data["kode_barang"]?></td>
-                      <td><?= $data["nama"]?></td>
-                      <td><?= $data["kategori"]?></td>
-                      <td><?= $data["tersedia"]?></td>
+                      <td><?= $data["nama_barang"]?></td>
+                      <td><?= $data["nama_kategori"]?></td>
+                      <td><?= $data["stok"]?></td>
                       <td>
-                        <a href="ubah-barang.php?id=<?= $data['id']?>" class="btn btn-warning"><i class="bi bi-pencil-square"></i></a>
-                        <a href="proses-hapus-barang.php?id=<?= $data['id']?>" class="btn btn-danger"><i class="bi bi-trash"></i></a>
+                        <a href="ubah-barang.php?id=<?= $data['id_barang']?>" class="btn btn-warning"><i class="bi bi-pencil-square"></i></a>
+                        <a href="proses-hapus-barang.php?id=<?= $data['id_barang']?>" class="btn btn-danger"><i class="bi bi-trash"></i></a>
                       </td>
                     </tr>
                     <?php $n++;} ?>
