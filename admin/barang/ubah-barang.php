@@ -1,7 +1,7 @@
 <?php
 include "../koneksi.php";
 if (isset($_GET['id'])) {
-  $stmt = $conn->prepare("SELECT * FROM barang WHERE id=?");
+  $stmt = $conn->prepare("SELECT * FROM barang WHERE id_barang=?");
   $stmt->bind_param("i", $_GET['id']);
   $stmt->execute();
   $result = $stmt->get_result();
@@ -89,18 +89,11 @@ if (isset($_GET['id'])) {
                 <h4>Ubah Barang</h4>
               </div>
               <form class="card-body container" action="proses-ubah-barang.php" method="post">
-                <input type="hidden" name="id" value="<?= $data['id']; ?>">
+                <input type="hidden" name="id" value="<?= $data['id_barang']; ?>">
                 <div class="row mb-3">
-                  <div class="col-3">
-                    <label for="kode" class="form-label">Kode Barang</label>
-                    <div class="input-group" >
-                      <span class="input-group-text" id="basic-addon1">#</span>
-                      <input type="text" class="form-control" id="kode" name="kode" placeholder="Masukan kode barang" required value="<?= $data['kode_barang']; ?>">
-                    </div>
-                  </div>
                   <div class="col">
                     <label for="nama" class="form-label">Nama Barang</label>
-                    <input type="text" class="form-control" id="nama" name="nama" placeholder="Masukan nama barang" required value="<?= $data['nama']; ?>">
+                    <input type="text" class="form-control" id="nama" name="nama" placeholder="Masukan nama barang" required value="<?= $data['nama_barang']; ?>">
                   </div>
                 </div>
                 <div class="row mb-3">
@@ -108,14 +101,19 @@ if (isset($_GET['id'])) {
                     <label class="form-label">Kategori</label>
                     <select class="form-select" aria-label="Default select example" id="kategori" name="kategori" required>
                       <option disabled>Pilih Kategori</option>
-                      <option value="Alat Tulis" <?= $data['kategori'] == "Alat Tulis" ? "selected" : "" ?>>Alat Tulis</option>
-                      <option value="Projektor" <?= $data['kategori'] == "Projektor" ? "selected" : "" ?>>Projektor</option>
-                      <option value="Lainnya" <?= $data['kategori'] == "Lainnya" ? "selected" : "" ?>>Lainnya</option>
+                      <?php
+                        $stmt = $conn->prepare("SELECT * FROM kategori");
+                        $stmt->execute();
+                        $result = $stmt->get_result();
+                        while ($row = mysqli_fetch_array($result)) {
+                          ?>
+                          <option value="<?= htmlspecialchars($row['id_kategori']) ?>" <?= $row['id_kategori'] == $data['id_kategori'] ? 'selected' : '' ?>>
+                          <?= htmlspecialchars($row['nama_kategori']) ?>
+                          </option>
+                          <?php
+                        }
+                      ?>
                     </select>
-                  </div>
-                  <div class="col">
-                    <label  class="form-label">Kondisi Barang</label>
-                    <input type="text" class="form-control" id="kondisi" name="kondisi" placeholder="Jelaskan kondisi barang" value="<?= $data['kondisi']; ?>">
                   </div>
                 </div>
                 <div class="row">
@@ -126,12 +124,8 @@ if (isset($_GET['id'])) {
                 </div>
                 <div class="row">
                   <div class="col-2 mb-3 ">
-                    <label class="form-label" for="status">Status Barang</label>
-                    <select class="form-select" id="status" name="status" required>
-                      <option value="Tersedia" <?= $data['tersedia'] == "Tersedia" ? "selected" : "" ?>>Tersedia</option>
-                      <option value="Dipinjam" <?= $data['tersedia'] == "Dipinjam" ? "selected" : "" ?>>Dipinjam</option>
-                      <option value="Tidak Tersedia" <?= $data['tersedia'] == "Tidak Tersedia" ? "selected" : "" ?>>Tidak Tersedia</option>
-                    </select>
+                    <label class="form-label" for="Stok">Stok Barang</label>
+                    <input type="number" class="form-control" id="stok" name="stok" placeholder="Masukan stok barang" required value="<?= $data['stok']; ?>">
                   </div>
                 </div>
                 <div class="row justify-content-end">
