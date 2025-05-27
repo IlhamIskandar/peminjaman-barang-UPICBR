@@ -1,3 +1,4 @@
+
 <div class="container-fluid">
           <!--begin::Start Navbar Links-->
           <ul class="navbar-nav">
@@ -24,7 +25,7 @@
             <!--begin::User Menu Dropdown-->
             <li class="nav-item dropdown user-menu">
               <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
-                <span class="d-none d-md-inline">Nama Admin</span>
+                <span class="d-none d-md-inline"><?= $_SESSION['username']  ?></span>
               </a>
               <ul class="dropdown-menu dropdown-menu-lg dropdown-menu-end">
                 <!--begin::Menu Body-->
@@ -32,7 +33,7 @@
                   <!--begin::Row-->
                   <div class="row">
                     <div class="col text-center"><a href="#">Profile</a></div>
-                    <div class="col text-center"><a href="#" >Logout</a></div>
+                    <div class="col text-center"><a href="../logout.php" >Logout</a></div>
                   </div>
                   <!--end::Row-->
                 </li>

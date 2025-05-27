@@ -2,21 +2,50 @@
 include "function.php";
 session_start();
 if (isset($_SESSION['role']) == 'admin') {
-    header("Location: admin/index.php");
+    header("Location: ../admin/index.php");
     return;
 } elseif (isset($_SESSION['role']) == 'user') {
-    header("Location: user/index.php");
+    header("Location: ../user/index.php");
     return;
 
 }
 
-if(isset($_POST)){
-$email = $_POST['email'];
-$password = $_POST['password'];
+if(isset($_POST['email']) && isset($_POST['password'])){
+    $email = $_POST['email'];
+    $password = $_POST['password'];
 
-$sql = "SELECT * FROM users WHERE email = '$email' AND password = 'password_hash($password, PASSWORD_DEFAULT)'";
+    // Prepare and bind
+    $stmt = $conn->prepare("SELECT * FROM users WHERE email=?");
+    $stmt->bind_param("s", $email);
+    $stmt->execute();
+    $result = $stmt->get_result();
 
+    if ($result->num_rows > 0) {
+        // User exists, now verify the password
+        $user = $result->fetch_assoc();
+        if (password_verify($password, $user['password'])) {
+            // Password is correct, set session variables
+            $_SESSION['role'] = $user['role'];
+            $_SESSION['username'] = $user['username'];
+            if (isset($_SESSION['role']) == 'admin') {
+                header("Location: ../admin/index.php");
+                return;
+            } elseif (isset($_SESSION['role']) == 'user') {
+                header("Location: ../user/index.php");
+                return;
+
+            }
+        } else {
+            echo "<script>alert('Password salah!');</script>";
+        }
+    } else {
+        echo "<script>alert('Email tidak terdaftar!');</script>";
+    }
 }
+
+// password_verify(1, "$2y$10$Ex1nKruwt23oaf.46hj1xOhBDaRso.8Uq0vRHvvXi.H");
+
+
 
 
 ?>
@@ -82,11 +111,11 @@ $sql = "SELECT * FROM users WHERE email = '$email' AND password = 'password_hash
           <p class="login-box-msg">Belum punya akun? <a class="small" href="register.php">Daftar</a></p>
           <form action="" method="post">
             <div class="input-group mb-3">
-              <input type="email" class="form-control" placeholder="Email" />
+              <input type="email" class="form-control" placeholder="Email" name="email" id="email"/>
               <div class="input-group-text"><span class="bi bi-envelope"></span></div>
             </div>
             <div class="input-group mb-3">
-              <input type="password" class="form-control" placeholder="Password" />
+              <input type="password" class="form-control" placeholder="Password" name="password" id="password"/>
               <div class="input-group-text"><span class="bi bi-lock-fill"></span></div>
             </div>
             <!-- /.social-auth-links -->

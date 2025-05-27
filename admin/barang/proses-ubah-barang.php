@@ -1,5 +1,6 @@
 <?php
 include "../koneksi.php";
+include "../admin-validation.php";
 
 $id_barang = $_POST['id'];
 $nama_barang = $_POST['nama'];

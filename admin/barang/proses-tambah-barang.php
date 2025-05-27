@@ -1,11 +1,13 @@
 <?php
-
 include "../koneksi.php";
+include "../admin-validation.php";
 
 $nama_barang = $_POST['nama'];
 $kategori_barang = $_POST['kategori'];
 $deskripsi_barang = $_POST['deskripsi'];
 $stok = $_POST['stok'];
+$img = $_FILES['img']['name'];
+$target_dir = "../../img/barang/";
 
 $stmt = $conn->prepare("INSERT INTO barang (nama_barang, id_kategori, deskripsi, stok) VALUES (?, ?, ?, ?)");
 $stmt->bind_param("ssss", $nama_barang, $kategori_barang, $deskripsi_barang, $stok);

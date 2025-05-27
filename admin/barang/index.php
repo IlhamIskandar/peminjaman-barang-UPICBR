@@ -1,5 +1,7 @@
 <?php
 include "../koneksi.php";
+include "../admin-validation.php";
+
 ?>
 
 <!doctype html>

@@ -1,5 +1,7 @@
 <?php
 include "../koneksi.php";
+include "../admin-validation.php";
+
 if (isset($_GET['id'])) {
   $stmt = $conn->prepare("SELECT * FROM barang WHERE id_barang=?");
   $stmt->bind_param("i", $_GET['id']);

@@ -1,5 +1,6 @@
 <?php
 include "../koneksi.php";
+include "../admin-validation.php";
 
 ?>
 
@@ -66,7 +67,7 @@ include "../koneksi.php";
               <div class="card-header ">
                 <h4>Tambah Barang</h4>
               </div>
-              <form class="card-body container" action="proses-tambah-barang.php" method="post">
+              <form class="card-body container" action="proses-tambah-barang.php" method="post" enctype="multipart/form-data">
                 <div class="row mb-3">
                   <!-- <div class="col-3">
                     <label for="kode" class="form-label">Kode Barang</label>
@@ -104,6 +105,12 @@ include "../koneksi.php";
                   <div class="mb-3 ">
                     <label for="deskripsi">Deskripsi Barang</label>
                     <textarea class="form-control" placeholder="Masukan deskripsi barang" id="deskripsi" name="deskripsi"></textarea>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="mb-3">
+                    <label for="img" class="form-label">Upload Gambar Barang</label>
+                    <input class="form-control" type="file" id="img" name="img" accept="image/*">
                   </div>
                 </div>
                 <div class="row">

@@ -1,5 +1,6 @@
 <?php
 include "../koneksi.php";
+include "../admin-validation.php";
 
 if (isset($_GET['id'])) {
     $id_kategori = $_GET['id'];

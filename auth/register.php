@@ -1,12 +1,11 @@
 <?php
 include "function.php";
 session_start();
-var_dump($_POST);
 if (isset($_SESSION['role']) == 'admin') {
-    header("Location: admin/index.php");
+    header("Location: ../admin/index.php");
     return;
 } elseif (isset($_SESSION['role']) == 'user') {
-    header("Location: user/index.php");
+    header("Location: ../user/index.php");
     return;
 }
 if(isset($_POST['confirm_password'])){
@@ -58,6 +57,7 @@ if(isset($_POST['confirm_password'])){
         alert('Registrasi gagal!');
         window.histroy.back();
         </script>";
+        return;
     }
 }
 ?>
