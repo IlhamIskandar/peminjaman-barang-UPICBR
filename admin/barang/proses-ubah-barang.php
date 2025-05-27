@@ -10,25 +10,33 @@ $stok = $_POST['stok'];
 $img = $_FILES['img']['name'];
 $img_tmp = $_FILES['img']['tmp_name'];
 $target_dir = "../../image/barang/";
-$img_name = uniqid() . '.png';
+// Check if an image is uploaded
+if (empty($img)) {
+    // If no image is uploaded, keep the existing image
+    $img_name = $_POST['img_lama'];
+} else {
+    // If an image is uploaded, generate a new unique name
+    $img_name = uniqid() . '.png';
+    if (move_uploaded_file($img_tmp, $target_dir. $img_name)) {
+        // File uploaded successfully
+    } else {
+      // Handle file upload error
+      echo "
+      <script>
+        alert('Gagal mengunggah gambar barang');
+        window.location.href = 'ubah-barang.php?id=$id_barang';
+      </script>
+      ";
+    }
+}
+
 
 $stmt = $conn->prepare("UPDATE barang SET nama_barang=?, id_kategori=?, deskripsi=?, stok=?, img=? WHERE id_barang = ?");
 $stmt->bind_param("ssssss", $nama_barang, $kategori_barang, $deskripsi_barang, $stok, $img_name, $id_barang );
 
 
+
 if ($stmt->execute()) {
-  if (move_uploaded_file($img_tmp, $target_dir. $img_name)) {
-    // File uploaded successfully
-    } else {
-        // Handle file upload error
-        echo "
-        <script>
-        alert('Gagal mengunggah gambar barang');
-          window.location.href = 'tambah-barang.php';
-        </script>
-        ";
-        return;
-      }
       echo "
       <script>
         alert('Berhasil mengubah barang');

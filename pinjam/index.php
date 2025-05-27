@@ -48,12 +48,8 @@ var_dump($_SESSION);
           <div class="container-fluid">
             <!--begin::Row-->
             <div class="row">
-              <div class="col-sm-6"><h3 class="mb-0">Data Barang</h3></div>
+              <div class="col-sm-6"><h3 class="mb-0">Daftar Barang</h3></div>
               <div class="col-sm-6">
-                <ol class="breadcrumb float-sm-end">
-                  <li class="breadcrumb-item"><a href="/admin/dashboard">Home</a></li>
-                  <li class="breadcrumb-item active" aria-current="page">Data Barang</li>
-                </ol>
               </div>
             </div>
             <!--end::Row-->
@@ -71,20 +67,36 @@ var_dump($_SESSION);
                     while($data= mysqli_fetch_array($result)) {
                     ?>
             <div class="card mb-3">
-              <div class="row card-body">
-                <div class="col-3">
-                  <img style="max-width: 20vh;" src="../image/barang/<?= $data['img']?>" alt="<?= $data['img']?>">
+              <div class="row card-body ">
+                <div class="col-md-3 col-lg-2 col-sm-12 d-flex align-items-center">
+                  <img class="rounded mx-auto img-fluid" style="" src="../image/barang/<?= $data['img']?>" alt="<?= $data['img']?>">
                 </div>
-                <div class="col-3">
-                  <?= $data["nama_barang"]?></td>
-                </div>
-                <div class="col-3">
-                  <?= $data["nama_kategori"]?></td>
-                </div>
-                <div class="col-3">
-                  <?= $data["stok"]?></td>
-                </div>
+                <div class="col">
+                  <div class="row">
+                    <h4 class="mb-0"><?= $data["nama_barang"]?></h4>
                   </div>
+                  <div class="row">
+                     <p class="mb-1 text-muted">
+                      <?= $data["nama_kategori"]?>
+                     </p>
+                  </div>
+                  <div class="row">
+                    <p>
+                      <?= $data["deskripsi"]?>
+                    </p>
+                  </div>
+                  <div class="row align-items-center">
+                    <div class="col-6">
+                      <p class="mb-0">
+                        Stok: <span class="badge bg-success"><?= $data["stok"]?></span>
+                      </p>
+                    </div>
+                    <div class="col-6 justify-content-end d-flex">
+                        <a href="pinjam-barang.php?id=<?= $data['id_barang']?>" class="btn btn-primary">Pinjam</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
                 <?php $n++;} ?>
           </div>

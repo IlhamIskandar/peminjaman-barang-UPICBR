@@ -129,6 +129,7 @@ if (isset($_GET['id'])) {
                     <label for="img" class="form-label">Upload Gambar Barang</label>
                     <input class="form-control" type="file" id="img" name="img" accept="image/*">
                     <img style="max-width: 20vh;" src="../../image/barang/<?= $data['img']?>" alt="<?= $data['img']?>">
+                    <input type="text" class="form-control mt-2" id="img_lama" name="img_lama" value="<?= $data['img']?>" hidden>
                   </div>
                 </div>
                 <div class="row">

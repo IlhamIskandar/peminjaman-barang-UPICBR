@@ -87,7 +87,7 @@ include "../admin-validation.php";
                     ?>
                     <tr>
                       <th><?= $n?></th>
-                      <td><?= $data["nama_barang"]?> <img src="../../image/barang/<?= $data['img']?>" alt="<?= $data['img']?>"></td>
+                      <td><?= $data["nama_barang"]?></td>
                       <td><?= $data["nama_kategori"]?></td>
                       <td><?= $data["stok"]?></td>
                       <td>
