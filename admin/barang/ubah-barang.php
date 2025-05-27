@@ -90,7 +90,7 @@ if (isset($_GET['id'])) {
               <div class="card-header ">
                 <h4>Ubah Barang</h4>
               </div>
-              <form class="card-body container" action="proses-ubah-barang.php" method="post">
+              <form class="card-body container" action="proses-ubah-barang.php" method="post" enctype="multipart/form-data">
                 <input type="hidden" name="id" value="<?= $data['id_barang']; ?>">
                 <div class="row mb-3">
                   <div class="col">
@@ -99,7 +99,7 @@ if (isset($_GET['id'])) {
                   </div>
                 </div>
                 <div class="row mb-3">
-                  <div class="col-3">
+                  <div class="col-md-3 col-sm-12">
                     <label class="form-label">Kategori</label>
                     <select class="form-select" aria-label="Default select example" id="kategori" name="kategori" required>
                       <option disabled>Pilih Kategori</option>
@@ -122,6 +122,13 @@ if (isset($_GET['id'])) {
                   <div class="mb-3 ">
                     <label for="deskripsi">Deskripsi Barang</label>
                     <textarea class="form-control" placeholder="Masukan deskripsi barang" id="deskripsi" name="deskripsi"><?= $data['deskripsi'] ?></textarea>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-4 mb-3">
+                    <label for="img" class="form-label">Upload Gambar Barang</label>
+                    <input class="form-control" type="file" id="img" name="img" accept="image/*">
+                    <img style="max-width: 20vh;" src="../../image/barang/<?= $data['img']?>" alt="<?= $data['img']?>">
                   </div>
                 </div>
                 <div class="row">

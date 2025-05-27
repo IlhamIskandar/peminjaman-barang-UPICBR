@@ -82,7 +82,7 @@ include "../admin-validation.php";
                   </div>
                 </div>
                 <div class="row mb-3">
-                  <div class="col-4">
+                  <div class="col-4 col-sm-12">
                     <label class="form-label">Kategori</label>
                     <select class="form-select" aria-label="Default select example" id="kategori" name="kategori" required>
                       <option selected disabled>Pilih Kategori</option>

@@ -27,13 +27,13 @@ if(isset($_POST['email']) && isset($_POST['password'])){
             // Password is correct, set session variables
             $_SESSION['role'] = $user['role'];
             $_SESSION['username'] = $user['username'];
+            $_SESSION['id'] = $user['id_user'];
             if (isset($_SESSION['role']) == 'admin') {
                 header("Location: ../admin/index.php");
                 return;
             } elseif (isset($_SESSION['role']) == 'user') {
                 header("Location: ../user/index.php");
                 return;
-
             }
         } else {
             echo "<script>alert('Password salah!');</script>";
