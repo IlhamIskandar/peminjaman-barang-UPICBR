@@ -40,4 +40,4 @@ ad.js
 /.cache/
 
 # IMAGE
-/image/barang/
+image/barang/*png
