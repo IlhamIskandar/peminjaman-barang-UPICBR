@@ -6,7 +6,7 @@ if ($_SESSION['role'] == 'user') {
     return;
 }
 if (!isset($_SESSION['role'])) {
-    header("Location: ../auth/login.php");
+    header("Location: ../../auth/login.php");
     return;
 }
 ?>
