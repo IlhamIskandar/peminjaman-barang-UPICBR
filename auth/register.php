@@ -46,7 +46,7 @@ if(isset($_POST['confirm_password'])){
     if ($stmt->execute()) {
         echo "
         <script>
-        alert('Registrasi berhasil!');
+        alert('Registrasi berhasil! Silahkan Login');
         window.location.href = 'login.php';
         </script>";
 

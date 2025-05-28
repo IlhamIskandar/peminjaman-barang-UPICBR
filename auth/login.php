@@ -1,13 +1,15 @@
 <?php
 include "function.php";
 session_start();
-if (isset($_SESSION['role']) == 'admin') {
-    header("Location: ../admin/index.php");
-    return;
-} elseif (isset($_SESSION['role']) == 'user') {
-    header("Location: ../user/index.php");
-    return;
 
+if (isset($_SESSION['role'])) {
+    if ($_SESSION['role'] == 'admin') {
+        header("Location: ../admin/index.php");
+        return;
+    } elseif ($_SESSION['role'] == 'peminjam') {
+        header("Location: ../pinjam/");
+        return;
+    }
 }
 
 if(isset($_POST['email']) && isset($_POST['password'])){
@@ -28,11 +30,11 @@ if(isset($_POST['email']) && isset($_POST['password'])){
             $_SESSION['role'] = $user['role'];
             $_SESSION['username'] = $user['username'];
             $_SESSION['id'] = $user['id_user'];
-            if (isset($_SESSION['role']) == 'admin') {
+            if ($_SESSION['role'] == 'admin') {
                 header("Location: ../admin/index.php");
                 return;
-            } elseif (isset($_SESSION['role']) == 'user') {
-                header("Location: ../user/index.php");
+            } elseif ($_SESSION['role'] == 'peminjam') {
+                header("Location: ../pinjam");
                 return;
             }
         } else {
@@ -42,11 +44,6 @@ if(isset($_POST['email']) && isset($_POST['password'])){
         echo "<script>alert('Email tidak terdaftar!');</script>";
     }
 }
-
-// password_verify(1, "$2y$10$Ex1nKruwt23oaf.46hj1xOhBDaRso.8Uq0vRHvvXi.H");
-
-
-
 
 ?>
 

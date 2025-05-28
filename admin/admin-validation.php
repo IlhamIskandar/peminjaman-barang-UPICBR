@@ -1,8 +1,8 @@
 <?php
 session_start();
 
-if ($_SESSION['role'] == 'user') {
-    header("Location: ../../pinjam/index.php");
+if ($_SESSION['role'] == 'peminjam') {
+    header("Location: ../../pinjam/");
     return;
 }
 if (!isset($_SESSION['role'])) {
