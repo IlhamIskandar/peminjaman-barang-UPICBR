@@ -127,11 +127,15 @@ if(isset($_POST['confirm_password'])){
             </div>
             <div class="input-group mb-3">
               <input type="text" class="form-control" placeholder="NIM/NIP" name="nimnip" id="nimnip" required />
-              <div class="input-group-text"><span class="bi bi-person"></span></div>
+              <div class="input-group-text"><span class="bi bi-file-earmark-person"></span></div>
             </div>
             <div class="input-group mb-3">
               <input type="email" class="form-control" placeholder="Email" name="email" id="email" required/>
               <div class="input-group-text"><span class="bi bi-envelope"></span></div>
+            </div>
+            <div class="input-group mb-3">
+              <input type="notelp" class="form-control" placeholder="Nomor Telepon" name="notelp" id="notelp" required/>
+              <div class="input-group-text"><span class="bi bi-telephone"></span></div>
             </div>
             <div class="input-group mb-3">
               <input type="password" class="form-control" placeholder="Password" name="password" id="password" required/>
