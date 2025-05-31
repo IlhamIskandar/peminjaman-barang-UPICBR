@@ -17,6 +17,8 @@ if (isset($_GET['id'])) {
     </script>
     ";
   }
+
+
   $stmt = $conn->prepare("SELECT * FROM users WHERE id_user=? ");
   $stmt->bind_param("i", $_SESSION['id']);
   $stmt->execute();
@@ -104,60 +106,136 @@ if (isset($_GET['id'])) {
                   <div class="row">
                     <h4 class="mb-1">Informasi Barang</h4>
                   </div>
-                  <div class="row">
-                    <div class="col-2 mb-1">
+                  <div class="row mb-1">
+                    <div class="col-4 col-sm-4 col-lg-3 col-md-4">
                       Nama Barang
                     </div>
-                    <div class="col mb-1">
+                    <div class="col">
                       : <?= $data_barang["nama_barang"]?>
                     </div>
                   </div>
-                  <div class="row">
-                    <div class="col-2 mb-1">
+                  <div class="row mb-1">
+                    <div class="col-4 col-sm-4 col-lg-3 col-md-4">
                       Kategori
                     </div>
-                    <div class="col mb-1">
+                    <div class="col ">
                       : <?= $data_barang["nama_kategori"]?>
                     </div>
                   </div>
-                  <div class="row">
+                  <div class="row mb-1">
                     <div class="col">
                       Deskripsi Barang
                       </div>
                   </div>
-                  <div class="row">
+                  <div class="row mb-1">
                     <div class="col">
                       <?= $data_barang["deskripsi"]?>
-                    </div>
-                  </div>
-                  <div class="row">
-                    <div class="col">
-                      <h4>Informasi Peminjam</h4>
-                    </div>
-                  </div>
-                  <div class="row">
-                    <div class="col">
-                      <?= $data_user["username"]?>
-                    </div>
-                  </div>
-                  <div class="row">
-                    <div class="col">
-                      <?= $data_user["email"]?>
-                    </div>
-                  </div>
-                  <div class="row">
-                    <div class="col">
-                      <?= $data_user["notelp"]?>
                     </div>
                   </div>
                   <div class="row align-items-center">
                     <div class="col-6">
                       <p class="mb-0">
-                        Tersedia: <span class="badge bg-success"><?= $data_barang["stok"]?></span>
+                        Tersedia: <span class="badge bg-success "><?= $data_barang["stok"]?></span>
                       </p>
                     </div>
-                    <div class="col-6 justify-content-end d-flex">
-                        <a href="barang.php?id=<?= $data_barang['id_barang']?>" class="btn btn-primary">Pinjam</a>
+                  </div>
+                  <hr>
+                  <div class="row mt-3">
+                    <div class="col">
+                      <h4>Informasi Peminjam</h4>
+                    </div>
+                  </div>
+                  <div class="row mb-1">
+                    <div class="col-4 col-sm-4 col-lg-3 col-md-4">
+                      Nama Pengguna
+                    </div>
+                    <div class="col">
+                      : <?= $data_user["username"]?>
+                    </div>
+                  </div>
+                  <div class="row mb-1">
+                    <div class="col-4 col-sm-4 col-lg-3 col-md-4">
+                      NIM/NIP
+                    </div>
+                    <div class="col">
+                      : <?= $data_user["nim_nip"]?>
+                    </div>
+                  </div>
+                  <div class="row mb-1">
+                    <div class="col-4 col-sm-4 col-lg-3 col-md-4">
+                      Email
+                    </div>
+                    <div class="col">
+                      : <?= $data_user["email"]?>
+                    </div>
+                  </div>
+                  <div class="row mb-1">
+                    <div class="col-4 col-sm-4 col-lg-3 col-md-4">
+                      Nomor Telepon
+                    </div>
+                    <div class="col">
+                      : <?= $data_user["notelp"]?>
+                    </div>
+                  </div>
+                  <div class="row mb-1">
+                    <div class="col-4 col-sm-4 col-lg-3 col-md-4">
+                      Tanggal Peminjaman
+                    </div>
+                    <div class="col">
+                      : <?= date('d-m-Y')?>
+                    </div>
+                  </div>
+                  <div class="row mb-1">
+                    <div class="col-4 col-sm-4 col-lg-3 col-md-4">
+                      Waktu Pengembalian
+                    </div>
+                    <div class="col">
+                      : <?= date('d-m-Y 17:00:00')?>
+                    </div>
+                  </div>
+                  <form class="row mb-1" action="proses-pinjam.php?id=<?= $data_barang['id_barang']?>" method="post">
+                    <div class="col-12">
+                      Catatan Peminjam
+                    </div>
+                    <div>
+                      <input type="hidden" name="id_barang" value="<?= $data_barang['id_barang']?>">
+                      <input type="hidden" name="id_user" value="<?= $data_user['id_user']?>">
+                      <div class="input-group mb-3">
+                        <textarea class="form-control" id="catatan" name="catatan" rows="3" placeholder="Masukkan catatan jika ada..."></textarea>
+                      </div>
+                    </div>
+                    <!-- Modal -->
+                        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                          <div class="modal-dialog">
+                            <div class="modal-content">
+                              <div class="modal-header">
+                                <h1 class="modal-title fs-5" id="exampleModalLabel">Konfirmasi Peminjaman</h1>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                              </div>
+                              <div class="modal-body">
+                                <p>
+                                  Jika Anda meminjam barang ini, pastikan Anda mengembalikannya tepat waktu. Barang yang dipinjam adalah <?= $data_barang["nama_barang"]?>. Pastikan juga stok barang masih tersedia.
+                                </p>
+                                <b>Catatan</b>
+                                <p>
+                                  Setelah Anda mengkonfirmasi peminjaman, Anda bisa mengambil barang ini di tempat peminjaman. Silakan hubungi petugas jika ada pertanyaan lebih lanjut.
+                                </p>
+                              </div>
+                              <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                                <button type="submit" class="btn btn-primary">Pinjam</button>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      <!-- END Modal -->
+                  </form>
+                  <div class="row align-items-center">
+                    <div class="col justify-content-end d-flex">
+                      <!-- Button trigger modal -->
+                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                          Pinjam
+                        </button>
                     </div>
                   </div>
                 </div>

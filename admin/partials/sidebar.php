@@ -67,21 +67,21 @@
                 <a href="#" class="nav-link">
                   <i class="nav-icon bi bi-box-seam-fill"></i>
                   <p>
-                    Konfirmasi
+                    Peminjaman Barang
                     <i class="nav-arrow bi bi-chevron-right"></i>
                   </p>
                 </a>
                 <ul class="nav nav-treeview">
                   <li class="nav-item">
-                    <a href="../peminjaman-barang" class="nav-link" >
+                    <a href="../peminjaman" class="nav-link" >
                       <i class="nav-icon bi bi-circle"></i>
-                      <p>Peminjaman Barang</p>
+                      <p>Konfirmasi Peminjaman</p>
                     </a>
                   </li>
                   <li class="nav-item">
-                    <a href="../barang/pengembalian-barang.php" class="nav-link">
+                    <a href="../pengembalian" class="nav-link">
                       <i class="nav-icon bi bi-circle"></i>
-                      <p>Pengembalian Barang</p>
+                      <p>Konfirmasi Pengembalian</p>
                     </a>
                   </li>
                 </ul>
