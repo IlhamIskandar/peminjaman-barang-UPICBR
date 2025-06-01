@@ -47,7 +47,7 @@ include "login-validation.php";
           <div class="container-fluid">
             <!--begin::Row-->
             <div class="row">
-              <div class="col-sm-6"><h3 class="mb-0">Daftar Barang</h3></div>
+              <div class="col-sm-6"><h3 class="mb-0">Peminjaman Anda</h3></div>
               <div class="col-sm-6">
               </div>
             </div>
@@ -59,7 +59,8 @@ include "login-validation.php";
         <div class="app-content">
           <div class="container-fluid" id="dynamic-content">
                     <?php
-                    $stmt = $conn->prepare("SELECT * FROM barang b JOIN kategori k ON b.id_kategori = k.id_kategori");
+                    $stmt = $conn->prepare("SELECT * FROM peminjaman p JOIN users u ON p.id_peminjam = u.id_user JOIN barang b ON p.id_barang = b.id_barang JOIN kategori k ON k.id_kategori = b.id_kategori WHERE p.id_peminjam = ? ORDER BY p.tanggal_pinjam DESC");
+                    $stmt->bind_param("i", $_SESSION['id']);
                     $stmt->execute();
                     $result = $stmt->get_result();
                     while($data= mysqli_fetch_array($result)) {
@@ -79,24 +80,24 @@ include "login-validation.php";
                      </p>
                   </div>
                   <div class="row">
-                    <p>
-                      <?= $data["deskripsi"]?>
-                    </p>
+                    <b>
+                      Catatan Peminjam
+                    </b>
                   </div>
-                  <div class="row align-items-center">
-                    <div class="col-6">
-                      <p class="mb-0">
-                        Tersedia: <span class="badge bg-success"><?= $data["tersedia"]?></span>
-                      </p>
-                    </div>
-                    <div class="col-6 justify-content-end d-flex">
-                        <a href="barang.php?id=<?= $data['id_barang']?>" class="btn btn-primary">Pinjam</a>
-                    </div>
+                  <div class="row">
+                    <div class="input-group mb-3">
+                        <textarea disabled class="form-control" id="catatan" name="catatan" rows="1" placeholder="<?= $data['catatan'] == ''? 'kosong': $data['catatan'];?>"></textarea>
+                      </div>
+                  </div>
+                  <div class="row">
+                    <p>
+                      <?= $data["catatan"]?>
+                    </p>
                   </div>
                 </div>
               </div>
             </div>
-                <?php $n++;} ?>
+                <?php } ?>
           </div>
         </div>
         <!--end::App Content-->

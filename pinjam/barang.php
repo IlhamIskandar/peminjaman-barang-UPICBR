@@ -88,6 +88,11 @@ if (isset($_GET['id'])) {
             <div class="row">
               <div class="col-sm-6"><h3 class="mb-0">Pinjam Barang</h3></div>
               <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-end">
+                  <script>
+                      document.write('<a href="' + document.referrer + '">Kembali</a>');
+                  </script>
+                </ol>
               </div>
             </div>
             <!--end::Row-->

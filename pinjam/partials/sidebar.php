@@ -27,11 +27,18 @@
               role="menu"
               data-accordion="false"
             >
-            <li class="nav-item">
+              <li class="nav-item">
                 <!-- <a href="#" class="nav-link" onclick="loadContent('Dashboard')"> -->
-                <a href="../dashboard" class="nav-link">
+                <a href="./" class="nav-link">
                   <i class="nav-icon bi bi-speedometer"></i>
-                  <p>Dashboard</p>
+                  <p>Daftar Barang</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <!-- <a href="#" class="nav-link" onclick="loadContent('Dashboard')"> -->
+                <a href="daftar-pinjaman.php" class="nav-link">
+                  <i class="nav-icon bi bi-speedometer"></i>
+                  <p>Daftar Pinjaman</p>
                 </a>
               </li>
               <li class="nav-item">

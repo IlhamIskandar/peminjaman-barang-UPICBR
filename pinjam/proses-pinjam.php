@@ -8,7 +8,7 @@ if(isset($_POST)){
     $id_user = $_SESSION['id'];
     $catatan = $_POST['catatan'];
     // $tanggal_pinjam = date('Y-m-d H:i:s');
-    $tanggal_pinjam = date('Y-m-d H:m:s');
+    $tanggal_pinjam = date('Y-m-d H:i:s');
     $batas_pengembalian = date('Y-m-d 17:00:00'); // Set batas pengembalian pada pukul 17:00:00 hari yang sama);
     $status = 'Menunggu Pengambilan';
 
