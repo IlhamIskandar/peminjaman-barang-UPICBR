@@ -36,7 +36,7 @@
                 <li class="user-body">
                   <!--begin::Row-->
                   <div class="row">
-                    <div class="col text-center"><a href="#">Profile</a></div>
+                    <div class="col text-center"><a href="../profile/">Profile</a></div>
                     <div class="col text-center"><a href="../../pinjam/" >Pinjam</a></div>
                     <div class="col text-center"><a href="../logout.php" >Logout</a></div>
                   </div>

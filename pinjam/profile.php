@@ -90,14 +90,6 @@ if (mysqli_num_rows($result) > 0) {
         <!--begin::Sidebar-->
         <?php include "partials/sidebar.php"; ?>
         <!--end::Sidebar-->
-        <!--begin::App Main-->
-        <main class="app-main">
-            <!--begin::App Content Header-->
-            <div class="app-content-header">
-                <!--begin::Container-->
-                <!--end::Container-->
-            </div>
-            <!--begin::App Content-->
             <!--begin::App Main-->
             <main class="app-main">
                 <!--begin::App Content-->

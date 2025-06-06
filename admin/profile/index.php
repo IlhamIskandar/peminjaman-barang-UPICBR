@@ -1,42 +1,56 @@
 <?php
 include "../koneksi.php";
 include "../admin-validation.php";
-$id_user = $_SESSION['id']; // pastikan id user disimpan saat login
+$id_user = $_SESSION['id'];
 
-if($_SERVER["REQUEST_METHOD"] == "POST") {
-    $email = $_POST['email'];
+  if(isset($_POST['id_user'])) {
+    $nama = $_POST['nama'];
     $nimnip = $_POST['nimnip'];
-    $password = $_POST['password'];
-    $confirm_password = $_POST['confirm_password'];
+    $email = $_POST['email'];
+    $telepon = $_POST['telepon'];
 
-    if($password != $confirm_password) {
-        echo "<script>alert('Konfirmasi kata sandi tidak cocok!');</script>";
-    } else{
-      // find user by email and nimnip
-      $stmt = $conn->prepare("SELECT * FROM users WHERE email = ? AND nim_nip = ?");
-      $stmt->bind_param("ss", $email, $nimnip);
-      $stmt->execute();
-      $result = $stmt->get_result();
-      if($result->num_rows > 0) {
-          // User found, update password
-          $hashed_password = password_hash($password, PASSWORD_DEFAULT);
-          $update_stmt = $conn->prepare("UPDATE users SET password = ? WHERE email = ? AND nim_nip = ?");
-          $update_stmt->bind_param("sss", $hashed_password, $email, $nimnip);
+    // Update data pengguna
+    $stmt = $conn->prepare("UPDATE users SET username=?, nim_nip=?, email=?, notelp=? WHERE id_user=?");
+    $stmt->bind_param("ssssi", $nama, $nimnip, $email, $telepon, $id_user);
 
-          if($update_stmt->execute()) {
-              echo "<script>alert('Kata sandi berhasil diubah!');</script>";
-              $update_stmt->close();
-          } else {
-              echo "<script>alert('Gagal mengubah kata sandi. Silakan coba lagi.');</script>";
-          }
-      } else {
-          echo "<script>alert('Pengguna tidak ditemukan dengan email dan NIM/NIP tersebut.');</script>";
-      }
-      $stmt->close();
-
+    if ($stmt->execute()) {
+        echo "
+        <script>
+            alert('Data berhasil diperbarui');
+            window.location.href = './';
+        </script>
+        ";
+    } else {
+        echo "
+        <script>
+            alert('Gagal memperbarui data');
+            window.location.href = './';
+        </script>
+        ";
     }
 
+    $stmt->close();
 }
+
+
+
+$stmt = $conn->prepare("SELECT * FROM users WHERE id_user = ?");
+$stmt->bind_param("i", $id_user);
+$stmt->execute();
+$result = $stmt->get_result();
+$stmt->close();
+
+if (mysqli_num_rows($result) > 0) {
+    $data = mysqli_fetch_assoc($result);
+  } else {
+    echo "
+    <script>
+      alert('Data tidak ditemukan');
+      window.location.href = 'index.php';
+    </script>
+    ";
+}
+
 ?>
 <!doctype html>
 <html lang="en">
@@ -86,39 +100,70 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
                 <!--begin::App Content-->
                 <div class="app-content">
                     <div class="container-fluid" id="dynamic-content">
-                        <div class="card card-outline">
+                        <div class="card card-success card-outline">
                             <div class="card-header ">
-                                <h4 >Ubah Kata Sandi Pengguna</h3>
-                                Masukkan Email dan NIM/NIP untuk reset kata sandi
-                            </div>
-                            <form class="card-body container" action="" method="post" enctype="multipart/form-data">
-
+                                <h4>Profil Pengguna</h4>
+                              </div>
+                              <form class="card-body container" action="" method="post">
+                                <input type="hidden" name="id_user" value="<?= $data['id_user'] ?>">
                                 <div class="mb-3">
-                                    <label for="email" class="form-label">Email</label>
-                                    <input type="email" class="form-control" name="email" required>
+                                    <label class="form-label">Nama Lengkap</label>
+                                    <input type="text" class="form-control" name="nama" value="<?= $data['username'] ?>" required>
                                 </div>
                                 <div class="mb-3">
-                                    <label for="nimnip" class="form-label">NIM/NIP</label>
-                                    <input type="nimnip" class="form-control" name="nimnip" required>
+                                    <label class="form-label">NIM/NIP</label>
+                                    <input type="text" class="form-control" name="nimnip" value="<?= $data['nim_nip'] ?>" required>
                                 </div>
                                 <div class="mb-3">
-                                    <label for="password" class="form-label">Kata Sandi Baru</label>
-                                    <input type="password" class="form-control" name="password" required>
+                                    <label class="form-label">Email</label>
+                                    <input type="email" class="form-control" name="email" value="<?= $data['email'] ?>" required>
                                 </div>
-                                <div class="mb-3">
-                                    <label for="confirm_password" class="form-label">Konfirmasi Kata Sandi Baru</label>
-                                    <input type="confirm_password" class="form-control" name="confirm_password" required>
+                                <div class="mb-4">
+                                  <label class="form-label">Nomor Telepon</label>
+                                  <input type="text" class="form-control" name="telepon" value="<?= $data['notelp'] ?>" required>
                                 </div>
-
                                 <div class="d-flex gap-2">
-                                    <button type="submit" class="btn btn-success w-100">Simpan</button>
+                                  <button type="submit" class="btn btn-success">Simpan</button>
+                                  <!-- Button trigger modal -->
+                                  <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#passModal">
+                                    Ubah Password
+                                  </button>
+                                  <!-- END Button trigger modal -->
                                 </div>
-                            </form>
-                            <?php if (!empty($message)): ?>
-                                <div class="alert alert-info mt-3">
-                                    <?= $message ?>
+                              </form>
+                                <!-- Modal -->
+                                <div class="modal fade" id="passModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                  <div class="modal-dialog">
+                                    <div class="modal-content">
+                                      <form action="proses-ubah-pass.php" method="post">
+                                        <div class="modal-header">
+                                          <h1 class="modal-title fs-5" id="exampleModalLabel">Ubah Password</h1>
+                                          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                          <div class="mb-3">
+                                            <label for="old_password" class="form-label">Password Lama</label>
+                                            <input type="password" class="form-control" id="old_password" name="old_password" required>
+                                          </div>
+                                          <div class="mb-3">
+                                            <label for="password" class="form-label">Password Baru</label>
+                                            <input type="password" class="form-control" id="password" name="password" required>
+                                          </div>
+                                          <div class="mb-3">
+                                            <label for="confirm_password" class="form-label">Konfirmasi Password Baru</label>
+                                            <input type="password" class="form-control" id="confirm_password" name="confirm_password" required>
+                                        </div>
+                                        <input type="text" name="id_user" value="<?= $data['id_user'] ?>" hidden>
+                                        </div>
+                                        <div class="modal-footer">
+                                          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                                          <button type="submit" class="btn btn-warning">Ubah</button>
+                                        </div>
+                                      </form>
+                                    </div>
+                                  </div>
                                 </div>
-                            <?php endif; ?>
+                                <!-- END Modal -->
                         </div>
                     </div>
                 </div>
