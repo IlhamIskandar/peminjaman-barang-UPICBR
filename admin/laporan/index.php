@@ -2,6 +2,33 @@
 include "../koneksi.php";
 include '../admin-validation.php';
 include '../function.php';
+
+if(isset($_POST['tanggal_awal']) && isset($_POST['tanggal_akhir'])) {
+    $awal_periode = $_POST['tanggal_awal'];
+    $akhir_periode = $_POST['tanggal_akhir'];
+
+    // Validasi tanggal
+    if (strtotime($awal_periode) > strtotime($akhir_periode)) {
+        echo "<script>alert('Tanggal awal tidak boleh lebih besar dari tanggal akhir.'); window.location.href='index.php';</script>";
+        exit;
+    }
+} else {
+    // Set default periode jika tidak ada input
+    $awal_periode = date('Y-m-01'); // Awal bulan ini
+    $akhir_periode = date('Y-m-t'); // Akhir bulan ini
+}
+// Query untuk mengambil data peminjaman
+
+$query = "SELECT *
+          FROM peminjaman p
+          JOIN users u ON p.id_peminjam = u.id_user
+          JOIN barang b ON p.id_barang = b.id_barang
+          WHERE p.tanggal_pinjam BETWEEN ? AND ?
+          ORDER BY p.tanggal_pinjam DESC";
+$stmt = $conn->prepare($query);
+$stmt->bind_param("ss", $awal_periode, $akhir_periode);
+$stmt->execute();
+$result = $stmt->get_result();
 ?>
 
 <!doctype html>
@@ -64,37 +91,104 @@ include '../function.php';
           <div class="container-fluid" id="dynamic-content">
             <div class="card">
               <div class="card-body">
+                <form action="" method="post">
+
+                  <div class="row align-items-baseline"  action="../cetak/laporan-peminjaman.php" method="post" target="_blank">
+                    <div class="col-md-3 col-lg-auto col-sm-1" >
+                      <input type="date" id="searchInput" name="tanggal_awal" class="form-control mb-3"  />
+                    </div>
+                    <div class="col-md-auto col-lg-auto col-sm-3 text-center mb-3">
+                      <span>Sampai</span>
+                    </div>
+                    <div class="col-md-3 col-lg-auto col-sm-3">
+                      <input type="date" id="searchInput " name="tanggal_akhir" class="form-control mb-3"  />
+                    </div>
+                    <div class="col-sm-auto col-md-auto col-lg-auto ">
+                      <button type="submit" class="btn btn-success">Ubah Periode</button>
+                      <!-- Button trigger modal -->
+                      <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#cetakModal">
+                        Cetak Laporan
+                      </button>
+                      <!-- END Button trigger modal -->
+                    </div>
+                  </div>
+                </form>
+                <!-- Modal -->
+                <div class="modal fade" id="cetakModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                  <form action="laporan.php" method="post" target="_blank">
+                  <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                          <h1 class="modal-title fs-5" id="exampleModalLabel">Cetak Laporan</h1>
+                          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="mb-3">
+                              <label for="tanggal_awal" class="form-label">Tanggal Awal</label>
+                              <input type="date" id="tanggal_awal" name="tanggal_awal" class="form-control" required />
+                            </div>
+                            <div class="mb-3">
+                              <label for="tanggal_akhir" class="form-label">Tanggal Akhir</label>
+                              <input type="date" id="tanggal_akhir" name="tanggal_akhir" class="form-control" required />
+                            </div>
+                          </div>
+                          <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
+                            <button type="submit" class="btn btn-primary">Cetak Laporan</button>
+                          </div>
+                        </div>
+                      </div>
+                    </form>
+                </div>
+                <!-- END Modal -->
                 <table class="table table-bordered">
                   <thead>
                     <tr>
                       <th>No</th>
-                      <th>Nama barang</th>
-                      <th>Nama Pengguna</th>
-                      <th>Waktu Peminjaman</th>
-                      <th>Waktu Pengembalian</th>
-                      <th>Status Peminjaman</th>
+                      <th>Nama Peminjam</th>
+                      <th>NIM/NIP</th>
+                      <th>Barang Dipinjam</th>
+                      <th>Tanggal Pinjam</th>
+                      <th>Batas Pengembalian</th>
+                      <th>Tanggal Kembali</th>
+                      <th>Status</th>
                     </tr>
                   </thead>
                   <tbody>
                     <?php
-                    $stmt = $conn->prepare("SELECT * FROM users b JOIN users k ON b.id_user = k.id_user");
-                    $stmt->execute();
-                    $result = $stmt->get_result();
                     $n = 1;
-                    while($data= mysqli_fetch_array($result)) {
+                    if ($result->num_rows > 0) {
+                      while ($data = $result->fetch_assoc()) {
                     ?>
-                    <tr>
-                      <th><?= $n?></th>
-                      <td><?= $data["username"]?></td>
-                      <td><?= $data["email"]?></td>
-                      <td><?= $data["notelp"]?></td>
-                      <td><?= $data["role"]?></td>
-                      <td>
-                        <a href="ubah-pengguna.php?id=<?= $data['id_user']?>" class="btn btn-warning"><i class="bi bi-pencil-square"></i></a>
-                        <a href="proses-hapus-pengguna.php?id=<?= $data['id_user']?>" class="btn btn-danger"><i class="bi bi-trash"></i></a>
-                      </td>
-                    </tr>
-                    <?php $n++;} ?>
+                        <tr>
+                          <th><?= $n ?></th>
+                          <td><?= htmlspecialchars($data['username']) ?></td>
+                          <td><?= htmlspecialchars($data['nim_nip']) ?></td>
+                          <td><?= htmlspecialchars($data['nama_barang']) ?></td>
+                          <td><?= htmlspecialchars($data['tanggal_pinjam']) ?></td>
+                          <td><?= htmlspecialchars($data['batas_pengembalian']) ?></td>
+                          <td><?= htmlspecialchars($data['tanggal_kembali']) ?></td>
+                          <td>
+                            <?php
+                            if ($data['status'] == 'dipinjam') {
+                              echo "<span class='badge bg-warning'>Dipinjam</span>";
+                            } elseif ($data['status'] == 'Dikembalikan') {
+                              echo "<span class='badge bg-success'>Kembali</span>";
+                            } else if($data['status'] == 'Menunggu Pengambilan') {
+                              echo "<span class='badge bg-secondary'>Menunggu Pengambilan</span>";
+                            } elseif ($data['status'] == 'Ditolak') {
+                              echo "<span class='badge bg-danger'>Ditolak</span>";
+                            }
+                            ?>
+                          </td>
+                        </tr>
+                    <?php
+                        $n++;
+                      }
+                    } else {
+                      echo "<tr><td colspan='7' class='text-center'>Tidak ada data peminjaman</td></tr>";
+                    }
+                    ?>
                   </tbody>
                 </table>
               </div>
