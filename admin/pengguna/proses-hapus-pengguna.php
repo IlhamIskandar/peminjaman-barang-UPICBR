@@ -3,23 +3,32 @@ include "../koneksi.php";
 include "../admin-validation.php";
 
 if (isset($_GET['id'])) {
-    $id_kategori = $_GET['id'];
-    $query = "DELETE FROM users WHERE id_user = '$id_user'";
-    if (mysqli_query($conn, $query)) {
-        echo "
-        <script>
-          alert('Berhasil menghapus pengguna');
-          window.location.href = 'pengguna.php';
-        </script>
-        ";
+    $id_user = $_GET['id'];
+
+    // Cek apakah pengguna dengan ID tersebut ada
+    $stmt = $conn->prepare("SELECT * FROM users WHERE id_user = ?");
+    $stmt->bind_param("i", $id_user);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    if ($result->num_rows > 0) {
+        // Hapus pengguna
+        $delete_stmt = $conn->prepare("Update users SET active = 0 WHERE id_user = ?");
+        $delete_stmt->bind_param("i", $id_user);
+
+        if ($delete_stmt->execute()) {
+            echo "<script>alert('Pengguna berhasil dihapus.'); window.location.href='index.php';</script>";
+        } else {
+            echo "<script>alert('Gagal menghapus pengguna. Silakan coba lagi.'); window.location.href='index.php';</script>";
+        }
     } else {
-        echo "
-        <script>
-          alert('Gagal menghapus pengguna');
-          window.location.href = 'pengguna.php';
-        </script>
-        ";
+        echo "<script>alert('Pengguna tidak ditemukan.'); window.location.href='index.php';</script>";
     }
+
+    // Tutup prepared statement
+    $stmt->close();
+} else {
+    echo "<script>alert('ID pengguna tidak ditemukan.'); window.location.href='index.php';</script>";
 }
 
 ?>

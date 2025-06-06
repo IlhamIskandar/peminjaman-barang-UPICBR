@@ -2,6 +2,31 @@
 include "../koneksi.php";
 include "../admin-validation.php";
 
+if (isset($_POST['kategori'])) {
+    $kategori = $_POST['kategori'];
+
+    // Prepare and execute the SQL statement
+    $stmt = $conn->prepare("INSERT INTO kategori (nama_kategori) VALUES (?)");
+    $stmt->bind_param("s", $kategori);
+
+    if ($stmt->execute()) {
+        echo "
+        <script>
+          alert('Berhasil menambah kategori barang');
+          window.location.href = 'kategori-barang.php';
+        </script>
+        ";
+    } else {
+        echo "
+        <script>
+          alert('Gagal menambah kategori barang');
+          window.location.href = 'kategori-barang.php';
+        </script>
+        ";
+    }
+    $stmt->close();
+}
+
 ?>
 
 <!doctype html>
@@ -48,7 +73,7 @@ include "../admin-validation.php";
                     <!--begin::Row-->
                     <div class="row">
                         <div class="col-sm-6">
-                            <h3 class="mb-0">Barang</h3>
+                            <h3 class="mb-0">Kategori Barang</h3>
                         </div>
                     </div>
                     <!--end::Row-->
@@ -98,7 +123,7 @@ include "../admin-validation.php";
                                 <div class="card-header ">
                                     <h4>Tambah Kategori Barang</h4>
                                 </div>
-                                <form class="card-body container" action="proses-tambah-barang.php" method="post">
+                                <form class="card-body container" action="" method="post">
                                     <div class="row mb-3">
                                         <div class="col-md-12">
                                             <label for="kategori" class="form-label">Kategori Barang</label>

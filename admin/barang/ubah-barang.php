@@ -71,13 +71,13 @@ if (isset($_GET['id'])) {
             <!--begin::Row-->
             <div class="row">
               <div class="col-sm-6"><h3 class="mb-0">Data Barang</h3></div>
-              <!-- <div class="col-sm-6">
+              <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-end">
-                  <li class="breadcrumb-item"><a href="../dashboard">Dashboard</a></li>
-                  <li class="breadcrumb-item">Data Barang</li>
-                  <li class="breadcrumb-item active" aria-current="page">Tambah Data Barang</li>
+                  <li class="breadcrumb-item"><a href="./">Kembali</a></li>
+                  <!-- <li class="breadcrumb-item">Data Barang</li>
+                  <li class="breadcrumb-item active" aria-current="page">Tambah Data Barang</li> -->
                 </ol>
-              </div> -->
+              </div>
             </div>
             <!--end::Row-->
           </div>
@@ -133,9 +133,13 @@ if (isset($_GET['id'])) {
                   </div>
                 </div>
                 <div class="row">
-                  <div class="col-2 mb-3 ">
-                    <label class="form-label" for="Stok">Stok Barang</label>
+                  <div class="col-3 mb-3 ">
+                    <label class="form-label" for="stok">Stok Barang</label>
                     <input type="number" class="form-control" id="stok" name="stok" placeholder="Masukan stok barang" required value="<?= $data['stok']; ?>">
+                  </div>
+                  <div class="col-3 mb-3 ">
+                    <label class="form-label" for="tersedia">Jumlah Barang Bisa Dipinjam</label>
+                    <input type="number" class="form-control" id="tersedia" name="tersedia" placeholder="Jumlah ketersediaan barang" required value="<?= $data['tersedia']; ?>">
                   </div>
                 </div>
                 <div class="row justify-content-end">

@@ -86,11 +86,22 @@ include "login-validation.php";
                   <div class="row align-items-center">
                     <div class="col-6">
                       <p class="mb-0">
-                        Tersedia: <span class="badge bg-success"><?= $data["tersedia"]?></span>
+                        <?php if ($data["tersedia"] > 0) {
+                          $badgeClass = "bg-success";
+                          $btnClass = "btn-primary";
+                          $btnText = "Pinjam";
+                          $btnDisabled = "";
+                        } else {
+                          $badgeClass = "bg-secondary";
+                          $btnClass = "btn-secondary disabled";
+                          $btnText = "Tidak Tersedia";
+                          $btnDisabled = "role='button' aria-disabled='true'";
+                        }?>
+                        Tersedia: <span class="badge <?= $badgeClass ?>"><?= $data["tersedia"]?></span>
                       </p>
                     </div>
                     <div class="col-6 justify-content-end d-flex">
-                        <a href="barang.php?id=<?= $data['id_barang']?>" class="btn btn-primary">Pinjam</a>
+                        <a href="barang.php?id=<?= $data['id_barang']?>" class="btn <?=$btnClass?>" <?=$btnDisabled?>><?=$btnText?></a>
                     </div>
                   </div>
                 </div>

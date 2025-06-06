@@ -50,8 +50,8 @@ include "../admin-validation.php";
               <div class="col-sm-6"><h3 class="mb-0">Data Barang</h3></div>
               <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-end">
-                  <li class="breadcrumb-item"><a href="#">Home</a></li>
-                  <li class="breadcrumb-item active" aria-current="page">Data Barang</li>
+                  <!-- <li class="breadcrumb-item"><a href="#">Home</a></li>
+                  <li class="breadcrumb-item active" aria-current="page">Data Barang</li> -->
                 </ol>
               </div>
             </div>
@@ -74,6 +74,7 @@ include "../admin-validation.php";
                       <th>Nama Barang</th>
                       <th>Kategori</th>
                       <th>stok</th>
+                      <th>Tersedia</th>
                       <th>Aksi</th>
                     </tr>
                   </thead>
@@ -90,6 +91,7 @@ include "../admin-validation.php";
                       <td><?= $data["nama_barang"]?></td>
                       <td><?= $data["nama_kategori"]?></td>
                       <td><?= $data["stok"]?></td>
+                      <td><?= $data["tersedia"]?></td>
                       <td>
                         <a href="ubah-barang.php?id=<?= $data['id_barang']?>" class="btn btn-warning"><i class="bi bi-pencil-square"></i></a>
                         <a href="proses-hapus-barang.php?id=<?= $data['id_barang']?>" class="btn btn-danger"><i class="bi bi-trash"></i></a>

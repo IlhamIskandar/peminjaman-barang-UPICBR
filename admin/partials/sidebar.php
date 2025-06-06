@@ -11,7 +11,7 @@
             />
             <!--end::Brand Image-->
             <!--begin::Brand Text-->
-            <span class="brand-text fw-light">Dashboard</span>
+            <span class="brand-text fw-light">Admin</span>
             <!--end::Brand Text-->
           </a>
           <!--end::Brand Link-->
@@ -87,10 +87,27 @@
                 </ul>
               </li>
               <li class="nav-item">
-                <a href="../pengguna" class="nav-link">
-                  <i class="nav-icon bi bi-speedometer"></i>
-                  <p>Pengguna</p>
+                <a href="#" class="nav-link">
+                  <i class="nav-icon bi bi-box-seam-fill"></i>
+                  <p>
+                    Pengguna
+                    <i class="nav-arrow bi bi-chevron-right"></i>
+                  </p>
                 </a>
+                <ul class="nav nav-treeview">
+                  <li class="nav-item">
+                    <a href="../pengguna" class="nav-link">
+                      <i class="nav-icon bi bi-circle"></i>
+                      <p>Data Pengguna</p>
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a href="../pengguna/ubah-password.php" class="nav-link">
+                      <i class="nav-icon bi bi-circle"></i>
+                      <p>Ubah Password Pengguna</p>
+                    </a>
+                  </li>
+                </ul>
               </li>
               <li class="nav-item">
                 <a href="../Laporan" class="nav-link">

@@ -1,6 +1,7 @@
 <?php
 include "../koneksi.php";
 include "../admin-validation.php";
+
 ?>
 
 <!doctype html>
@@ -39,71 +40,67 @@ include "../admin-validation.php";
         <?php include "../partials/sidebar.php"; ?>
       <!--end::Sidebar-->
       <!--begin::App Main-->
-      <main class="app-main">
-        <!--begin::App Content Header-->
-        <div class="app-content-header">
-          <!--begin::Container-->
-          <div class="container-fluid">
-            <!--begin::Row-->
-            <div class="row">
-              <div class="col-sm-6"><h3 class="mb-0">Data Pengguna</h3></div>
-              <div class="col-sm-6">
-                <ol class="breadcrumb float-sm-end">
-                  <!-- <li class="breadcrumb-item"><a href="#">Home</a></li>
-                  <li class="breadcrumb-item active" aria-current="page">Tabel Pengguna</li> -->
-                </ol>
+            <main class="app-main">
+              <!--begin::App Content Header-->
+              <div class="app-content-header">
+                <!--begin::Container-->
+                <div class="container-fluid">
+                  <!--begin::Row-->
+                  <div class="row">
+                    <div class="col-sm-6"><h3 class="mb-0">Data Pengguna</h3></div>
+                    <div class="col-sm-6">
+                      <ol class="breadcrumb float-sm-end">
+                        <!-- <li class="breadcrumb-item"><a href="./">Kembali</a></li> -->
+                      </ol>
+                    </div>
+                  </div>
+                  <!--end::Row-->
+                </div>
+                <!--end::Container-->
               </div>
-            </div>
-            <!--end::Row-->
-          </div>
-          <!--end::Container-->
-        </div>
-        <!--begin::App Content-->
-        <div class="app-content">
-          <div class="container-fluid" id="dynamic-content">
-            <div class="card">
-              <div class="card-body">
-                <table class="table table-bordered">
-                  <thead>
-                    <tr>
-                      <th>No</th>
-                      <th>Nama</th>
-                      <th>NIM/NIP</th>
-                      <th>Email</th>
-                      <th>No.Telp</th>
-                      <th>Role</th>
-                      <th>Aksi</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <?php
-                    $stmt = $conn->prepare("SELECT * FROM users b JOIN users k ON b.id_user = k.id_user WHERE b.active = 1");
-                    $stmt->execute();
-                    $result = $stmt->get_result();
-                    $n = 1;
-                    while($data= mysqli_fetch_array($result)) {
-                    ?>
-                    <tr>
-                      <th><?= $n?></th>
-                      <td><?= $data["username"]?></td>
-                      <td><?= $data["nim_nip"]?></td>
-                      <td><?= $data["email"]?></td>
-                      <td><?= $data["notelp"]?></td>
-                      <td><?= $data["role"]?></td>
-                      <td>
-                        <a href="detail-pengguna.php?id=<?= $data['id_user']?>" class="btn btn-warning"><i class="bi bi-pencil-square"></i></a>
-                        <a href="proses-hapus-pengguna.php?id=<?= $data['id_user']?>" class="btn btn-danger"><i class="bi bi-trash"></i></a>
-                      </td>
-                    </tr>
-                    <?php $n++;} ?>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-          </div>
-        </div>
-        <!--end::App Content-->
-      </main>
+                <!--begin::App Content-->
+                <div class="app-content">
+                    <div class="container-fluid" id="dynamic-content">
+                        <div class="card card-success card-outline">
+                            <div class="card-header ">
+                                <h4>Ubah Password Pengguna</h4>
+                                Masukan data akun pengguna yang ingin diubah passwordnya.
+                              </div>
+                              <form class="card-body container" action="proses-ubah-password.php" method="post">
+                                <div class="">
+                                    <label class="form-label">Nama Lengkap</label>
+                                    <input type="text" class="form-control" name="nama" value="" placeholder="Masukkan Nama Lengkap Pengguna" required>
+                                </div>
+                                <div class="">
+                                    <label class="form-label">NIM/NIP</label>
+                                    <input type="text" class="form-control" name="nimnip" value="" placeholder="Masukan NIM/NIP Pengguna" required>
+                                </div>
+                                <div class="">
+                                    <label class="form-label">Email</label>
+                                    <input type="email" class="form-control" name="email" value="" placeholder="Masukan Email Pengguna" required>
+                                </div>
+                                <div class="">
+                                    <label class="form-label">Nomor Telepon</label>
+                                    <input type="text" class="form-control" name="notelp" value="" required placeholder="Masukkan Nomor Telepon Pengguna">
+                                </div>
+                                <div class="">
+                                    <label class="form-label">Password Baru</label>
+                                    <input type="password" class="form-control" name="password_baru" placeholder="Masukkan Password Baru" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Konfirmasi Password Baru</label>
+                                    <input type="password" class="form-control" name="konfirmasi" placeholder="Konfirmasi Password Baru" required>
+                                </div>
+                                <div class="d-flex gap-2">
+                                  <button type="submit" class="btn btn-success">Ubah</button>
+                                </div>
+                              </form>
+                        </div>
+                    </div>
+                </div>
+                <!--end::App Content-->
+            </main>
+
       <!--end::App Main-->
       <!--begin::Footer-->
       <?php include "../partials/footer.php"; ?>

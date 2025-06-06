@@ -7,6 +7,7 @@ $nama_barang = $_POST['nama'];
 $kategori_barang = $_POST['kategori'];
 $deskripsi_barang = $_POST['deskripsi'];
 $stok = $_POST['stok'];
+$tersedia = $_POST['tersedia'];
 $img = $_FILES['img']['name'];
 $img_tmp = $_FILES['img']['tmp_name'];
 $target_dir = "../../image/barang/";
@@ -31,8 +32,8 @@ if (empty($img)) {
 }
 
 
-$stmt = $conn->prepare("UPDATE barang SET nama_barang=?, id_kategori=?, deskripsi=?, stok=?, img=? WHERE id_barang = ?");
-$stmt->bind_param("ssssss", $nama_barang, $kategori_barang, $deskripsi_barang, $stok, $img_name, $id_barang );
+$stmt = $conn->prepare("UPDATE barang SET nama_barang=?, id_kategori=?, deskripsi=?, stok=?, img=?, tersedia=? WHERE id_barang = ?");
+$stmt->bind_param("sssssss", $nama_barang, $kategori_barang, $deskripsi_barang, $stok, $img_name, $tersedia, $id_barang );
 
 
 
