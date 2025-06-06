@@ -80,20 +80,82 @@ include "login-validation.php";
                      </p>
                   </div>
                   <div class="row">
+                    <div class="col-4 col-sm-4 col-lg-3 col-md-4">
+                      Nama Peminjam
+                    </div>
+                    <div class="col">
+                      : <?= $data['username']?>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-4 col-sm-4 col-lg-3 col-md-4">
+                      Tanggal Pinjam
+                    </div>
+                    <div class="col">
+                      : <?= date('d M Y', strtotime($data['tanggal_pinjam']))?>
+                    </div>
+                  </div>
+
+                  <?php
+                  if ($data['status'] == 'Dipinjam' || $data['status'] == 'Menunggu Pengambilan') {
+                    ?>
+                  <div class="row">
+                    <div class="col-4 col-sm-4 col-lg-3 col-md-4">
+                      Batas Pengembalian
+                    </div>
+                    <div class="col">
+                      : <?= date('D, j M Y G:i:s', strtotime($data['batas_pengembalian']))?>
+                    </div>
+                  </div>
+                    <?php
+                  }
+                  ?>
+
+                  <?php
+                  if ($data['status'] == 'Dipinjam') {
+                    $badgeClass = 'bg-success';
+                  } elseif ($data['status'] == 'Ditolak') {
+                    $badgeClass = 'bg-danger';
+                  } else if ($data['status'] == 'Menunggu Pengambilan') {
+                    $badgeClass = 'bg-warning';
+                  }
+                  ?>
+
+                  <div class="row">
+                    <div class="col-4 col-sm-4 col-lg-3 col-md-4">
+                      Status
+                    </div>
+                    <div class="col">
+                      : <span class="badge <?= $badgeClass ?>"><?= $data['status'] ?></span>
+                    </div>
+                  </div>
+                  <div class="row">
                     <b>
                       Catatan Peminjam
                     </b>
                   </div>
                   <div class="row">
-                    <div class="input-group mb-3">
-                        <textarea disabled class="form-control" id="catatan" name="catatan" rows="1" placeholder="<?= $data['catatan'] == ''? 'kosong': $data['catatan'];?>"></textarea>
+                    <div class="input-group ">
+                        <?= $data['catatan'] == ''? 'TIdak Ada Catatan': $data['catatan'];?>
                       </div>
                   </div>
+                  <?php
+                  if ($data['status'] == 'Ditolak') {
+                    ?>
                   <div class="row">
-                    <p>
-                      <?= $data["catatan"]?>
-                    </p>
+                    <b>
+                      Catatan Peminjam
+                    </b>
                   </div>
+                  <div class="row">
+                    <div class="input-group mb-3 ">
+                        <?= $data['alasan'] == ''? 'TIdak Ada': $data['alasan'];?>
+                      </div>
+                  </div>
+                    <?php
+                  }
+                  ?>
+
                 </div>
               </div>
             </div>

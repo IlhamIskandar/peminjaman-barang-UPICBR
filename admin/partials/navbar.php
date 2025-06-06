@@ -25,6 +25,11 @@
             <!--begin::User Menu Dropdown-->
             <li class="nav-item dropdown user-menu">
               <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
+                <img
+                    src="../../image/blank_profile.png"
+                    class="user-image rounded-circle shadow"
+                    alt="User Image"
+                  />
                 <span class="d-none d-md-inline"><?= $_SESSION['username']  ?></span>
               </a>
               <ul class="dropdown-menu dropdown-menu-lg dropdown-menu-end">
@@ -33,6 +38,7 @@
                   <!--begin::Row-->
                   <div class="row">
                     <div class="col text-center"><a href="#">Profile</a></div>
+                    <div class="col text-center"><a href="../../pinjam/" >Pinjam</a></div>
                     <div class="col text-center"><a href="../logout.php" >Logout</a></div>
                   </div>
                   <!--end::Row-->

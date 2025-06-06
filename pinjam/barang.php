@@ -204,6 +204,7 @@ if (isset($_GET['id'])) {
                     </div>
                     <div>
                       <input type="hidden" name="id_barang" value="<?= $data_barang['id_barang']?>">
+                      <input type="hidden" name="nama_barang" value="<?= $data_barang['nama_barang']?>">
                       <input type="hidden" name="id_user" value="<?= $data_user['id_user']?>">
                       <div class="input-group mb-3">
                         <textarea class="form-control" id="catatan" name="catatan" rows="3" placeholder="Masukkan catatan jika ada..."></textarea>

@@ -95,6 +95,7 @@ include "../admin-validation.php";
                             <div class="modal-content">
                               <form action="proses-konfirm.php" method="POST">
                                 <input type="hidden" name="id_peminjaman" value="<?= $data['id_peminjaman']?>">
+                                <input type="hidden" name="id_peminjam" value="<?= $data['id_peminjam']?>">
                                 <div class="modal-header">
                                   <h1 class="modal-title fs-5" id="exampleModalLabel">Konfirmasi Peminjaman</h1>
                                   <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -117,7 +118,7 @@ include "../admin-validation.php";
                           </div>
                         </div>
                         <!-- END Modal -->
-                          <!-- Modal -->
+                        <!-- Modal -->
                         <div class="modal fade" id="cancModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                           <div class="modal-dialog">
                             <div class="modal-content">
@@ -136,6 +137,7 @@ include "../admin-validation.php";
                                   </div>
                                 </div>
                                 <input type="hidden" name="id_peminjaman" value="<?= $data['id_peminjaman']?>">
+                                <input type="hidden" name="id_peminjam" value="<?= $data['id_peminjam']?>">
                                 <div class="modal-footer">
                                   <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
                                   <button type="submit" class="btn btn-danger">Tolak</button>

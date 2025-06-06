@@ -1,10 +1,12 @@
 <?php
 include "koneksi.php";
 include "login-validation.php";
+include "controller/function.php";
 
 if(isset($_POST)){
 
     $id_barang = $_POST['id_barang'];
+    $nama_barang = $_POST['nama_barang'];
     $id_user = $_SESSION['id'];
     $catatan = $_POST['catatan'];
     // $tanggal_pinjam = date('Y-m-d H:i:s');
@@ -36,6 +38,7 @@ if(isset($_POST)){
         $stmt = $conn->prepare("INSERT INTO peminjaman (id_barang, id_peminjam, catatan, tanggal_pinjam, batas_pengembalian, status) VALUES (?, ?, ?, ?, ?, ?)");
         $stmt->bind_param("iissss", $id_barang, $id_user, $catatan, $tanggal_pinjam, $batas_pengembalian, $status);
         $stmt->execute();
+        addNotification($id_user, "Permintaan peminjaman $nama_barang telah dibuat. Silahkan ambil barang di tempat peminjaman.");
         echo "
           <script>
           alert('Peminjaman Berhasil Dibuat. Silahkan Ambil Barang di Tempat Peminjaman!');

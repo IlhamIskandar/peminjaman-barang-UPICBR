@@ -1,9 +1,43 @@
 <?php
 include "../koneksi.php";
 include "../admin-validation.php";
+$id_user = $_SESSION['id']; // pastikan id user disimpan saat login
 
+if($_SERVER["REQUEST_METHOD"] == "POST") {
+    $email = $_POST['email'];
+    $nimnip = $_POST['nimnip'];
+    $password = $_POST['password'];
+    $confirm_password = $_POST['confirm_password'];
+
+    if($password != $confirm_password) {
+        echo "<script>alert('Konfirmasi kata sandi tidak cocok!');</script>";
+    } else{
+      // find user by email and nimnip
+      $stmt = $conn->prepare("SELECT * FROM users WHERE email = ? AND nim_nip = ?");
+      $stmt->bind_param("ss", $email, $nimnip);
+      $stmt->execute();
+      $result = $stmt->get_result();
+      if($result->num_rows > 0) {
+          // User found, update password
+          $hashed_password = password_hash($password, PASSWORD_DEFAULT);
+          $update_stmt = $conn->prepare("UPDATE users SET password = ? WHERE email = ? AND nim_nip = ?");
+          $update_stmt->bind_param("sss", $hashed_password, $email, $nimnip);
+
+          if($update_stmt->execute()) {
+              echo "<script>alert('Kata sandi berhasil diubah!');</script>";
+              $update_stmt->close();
+          } else {
+              echo "<script>alert('Gagal mengubah kata sandi. Silakan coba lagi.');</script>";
+          }
+      } else {
+          echo "<script>alert('Pengguna tidak ditemukan dengan email dan NIM/NIP tersebut.');</script>";
+      }
+      $stmt->close();
+
+    }
+
+}
 ?>
-
 <!doctype html>
 <html lang="en">
 <!--begin::Head-->
@@ -44,84 +78,56 @@ include "../admin-validation.php";
             <!--begin::App Content Header-->
             <div class="app-content-header">
                 <!--begin::Container-->
-                <div class="container-fluid">
-                    <!--begin::Row-->
-                    <div class="row">
-                        <div class="col-sm-6">
-                            <h3 class="mb-0">Barang</h3>
-                        </div>
-                    </div>
-                    <!--end::Row-->
-                </div>
                 <!--end::Container-->
             </div>
             <!--begin::App Content-->
-            <div class="app-content">
-                <div class="container-fluid" id="dynamic-content">
-                    <div class="row gx-3">
-                        <div class="col">
-                            <div class="card card-success card-outline">
-                                <div class="card-header ">
-                                    <h4>tabel Kategori Barang</h4>
-                                    <table class="table table-bordered">
-                                        <thead>
-                                          <tr>
-                                            <th>No</th>
-                                            <th>Kategori Barang</th>
-                                            <th>Aksi</th>
-                                          </tr>
-                                        </thead>
-                                        <tbody>
-                                            <?php
-                                            $stmt = $conn->prepare("SELECT * FROM kategori");
-                                            $stmt->execute();
-                                            $result = $stmt->get_result();
-                                            $n = 1;
-                                            while ($data = mysqli_fetch_array($result)) {
-                                            ?>
-                                                <tr>
-                                                    <th><?= $n ?></th>
-                                                    <td><?= $data["nama_kategori"] ?></td>
-                                                    <td>
-                                                        <a href="proses-hapus-kategori.php?id=<?= $data['id_kategori'] ?>" class="btn btn-danger"><i class="bi bi-trash"></i></a>
-                                                    </td>
-                                                </tr>
-                                            <?php $n++;
-                                            } ?>
-                                        </tbody>
-                                    </table>
-                                </div>
+            <!--begin::App Main-->
+            <main class="app-main">
+                <!--begin::App Content-->
+                <div class="app-content">
+                    <div class="container-fluid" id="dynamic-content">
+                        <div class="card card-outline">
+                            <div class="card-header ">
+                                <h4 >Ubah Kata Sandi Pengguna</h3>
+                                Masukkan Email dan NIM/NIP untuk reset kata sandi
                             </div>
-                        </div>
-                        <div class="col">
-                            <div class=" card card-success card-outline">
-                                <div class="card-header ">
-                                    <h4>Tambah Kategori Barang</h4>
-                                </div>
-                                <form class="card-body container" action="proses-tambah-barang.php" method="post">
-                                    <div class="row mb-3">
-                                        <div class="col-md-12">
-                                            <label for="kategori" class="form-label">Kategori Barang</label>
-                                            <input type="text" class="form-control" id="nama" name="kategori" placeholder="Masukan kategori barang" required>
-                                        </div>
-                                    </div>
-                                    <div class="row justify-content-end">
-                                        <div class="col-auto mb-3">
-                                            <button class="btn btn-success">Tambah</button>
-                                        </div>
-                                    </div>
-                                </form>
-                            </div>
+                            <form class="card-body container" action="" method="post" enctype="multipart/form-data">
 
+                                <div class="mb-3">
+                                    <label for="email" class="form-label">Email</label>
+                                    <input type="email" class="form-control" name="email" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="nimnip" class="form-label">NIM/NIP</label>
+                                    <input type="nimnip" class="form-control" name="nimnip" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="password" class="form-label">Kata Sandi Baru</label>
+                                    <input type="password" class="form-control" name="password" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="confirm_password" class="form-label">Konfirmasi Kata Sandi Baru</label>
+                                    <input type="confirm_password" class="form-control" name="confirm_password" required>
+                                </div>
+
+                                <div class="d-flex gap-2">
+                                    <button type="submit" class="btn btn-success w-100">Simpan</button>
+                                </div>
+                            </form>
+                            <?php if (!empty($message)): ?>
+                                <div class="alert alert-info mt-3">
+                                    <?= $message ?>
+                                </div>
+                            <?php endif; ?>
                         </div>
                     </div>
                 </div>
                 <!--end::App Content-->
-        </main>
-        <!--end::App Main-->
-        <!--begin::Footer-->
-        <?php include "../partials/footer.php"; ?>
-        <!--end::Footer-->
+            </main>
+            <!--end::App Main-->
+            <!--begin::Footer-->
+            <?php include "../partials/footer.php"; ?>
+            <!--end::Footer-->
     </div>
     <!--end::App Wrapper-->
     <!--begin::Script-->

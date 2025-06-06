@@ -1,7 +1,7 @@
 <?php
-include "koneksi.php";
-include "login-validation.php";
-
+include "../koneksi.php";
+include '../admin-validation.php';
+include '../function.php';
 ?>
 
 <!doctype html>
@@ -23,7 +23,7 @@ include "login-validation.php";
       content="bootstrap 5, bootstrap, bootstrap 5 admin dashboard, bootstrap 5 dashboard, bootstrap 5 charts, bootstrap 5 calendar, bootstrap 5 datepicker, bootstrap 5 tables, bootstrap 5 datatable, vanilla js datatable, colorlibhq, colorlibhq dashboard, colorlibhq admin dashboard"
     />
     <!--end::Primary Meta Tags-->
-    <?php include "partials/head.php"?>
+    <?php include "../partials/head.php"?>
 
   </head>
   <body class="layout-fixed sidebar-expand-lg bg-body-tertiary">
@@ -32,12 +32,12 @@ include "login-validation.php";
       <!--begin::Header-->
       <nav class="app-header navbar navbar-expand bg-body">
         <!--begin::Container-->
-        <?php include "partials/navbar.php"; ?>
+        <?php include "../partials/navbar.php"; ?>
         <!--end::Container-->
       </nav>
       <!--end::Header-->
       <!--begin::Sidebar-->
-        <?php include "partials/sidebar.php"; ?>
+        <?php include "../partials/sidebar.php"; ?>
       <!--end::Sidebar-->
       <!--begin::App Main-->
       <main class="app-main">
@@ -47,8 +47,12 @@ include "login-validation.php";
           <div class="container-fluid">
             <!--begin::Row-->
             <div class="row">
-              <div class="col-sm-6"><h3 class="mb-0">Daftar Barang</h3></div>
+              <div class="col-sm-6"><h3 class="mb-0">Laporan Peminjaman</h3></div>
               <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-end">
+                  <li class="breadcrumb-item"><a href="#">Home</a></li>
+                  <li class="breadcrumb-item active" aria-current="page">Tabel Peminjaman</li>
+                </ol>
               </div>
             </div>
             <!--end::Row-->
@@ -58,52 +62,50 @@ include "login-validation.php";
         <!--begin::App Content-->
         <div class="app-content">
           <div class="container-fluid" id="dynamic-content">
+            <div class="card">
+              <div class="card-body">
+                <table class="table table-bordered">
+                  <thead>
+                    <tr>
+                      <th>No</th>
+                      <th>Nama barang</th>
+                      <th>Nama Pengguna</th>
+                      <th>Waktu Peminjaman</th>
+                      <th>Waktu Pengembalian</th>
+                      <th>Status Peminjaman</th>
+                    </tr>
+                  </thead>
+                  <tbody>
                     <?php
-                    $stmt = $conn->prepare("SELECT * FROM barang b JOIN kategori k ON b.id_kategori = k.id_kategori");
+                    $stmt = $conn->prepare("SELECT * FROM users b JOIN users k ON b.id_user = k.id_user");
                     $stmt->execute();
                     $result = $stmt->get_result();
+                    $n = 1;
                     while($data= mysqli_fetch_array($result)) {
                     ?>
-            <div class="card mb-3">
-              <div class="row card-body ">
-                <div class="col-md-3 col-lg-2 col-sm-12 d-flex align-items-center">
-                  <img class="rounded mx-auto img-fluid" style="max-height: 20vh;" src="../image/barang/<?= $data['img']?>" alt="<?= $data['img']?>">
-                </div>
-                <div class="col">
-                  <div class="row">
-                    <h4 class="mb-0"><?= $data["nama_barang"]?></h4>
-                  </div>
-                  <div class="row">
-                     <p class="mb-1 text-muted">
-                      <?= $data["nama_kategori"]?>
-                     </p>
-                  </div>
-                  <div class="row">
-                    <p>
-                      <?= $data["deskripsi"]?>
-                    </p>
-                  </div>
-                  <div class="row align-items-center">
-                    <div class="col-6">
-                      <p class="mb-0">
-                        Tersedia: <span class="badge bg-success"><?= $data["tersedia"]?></span>
-                      </p>
-                    </div>
-                    <div class="col-6 justify-content-end d-flex">
-                        <a href="barang.php?id=<?= $data['id_barang']?>" class="btn btn-primary">Pinjam</a>
-                    </div>
-                  </div>
-                </div>
+                    <tr>
+                      <th><?= $n?></th>
+                      <td><?= $data["username"]?></td>
+                      <td><?= $data["email"]?></td>
+                      <td><?= $data["notelp"]?></td>
+                      <td><?= $data["role"]?></td>
+                      <td>
+                        <a href="ubah-pengguna.php?id=<?= $data['id_user']?>" class="btn btn-warning"><i class="bi bi-pencil-square"></i></a>
+                        <a href="proses-hapus-pengguna.php?id=<?= $data['id_user']?>" class="btn btn-danger"><i class="bi bi-trash"></i></a>
+                      </td>
+                    </tr>
+                    <?php $n++;} ?>
+                  </tbody>
+                </table>
               </div>
             </div>
-                <?php } ?>
           </div>
         </div>
         <!--end::App Content-->
       </main>
       <!--end::App Main-->
       <!--begin::Footer-->
-      <?php include "partials/footer.php"; ?>
+      <?php include "../partials/footer.php"; ?>
       <!--end::Footer-->
     </div>
     <!--end::App Wrapper-->
@@ -127,7 +129,7 @@ include "login-validation.php";
       crossorigin="anonymous"
     ></script>
     <!--end::Required Plugin(Bootstrap 5)--><!--begin::Required Plugin(AdminLTE)-->
-    <script src="../dist/js/adminlte.js"></script>
+    <script src="../../dist/js/adminlte.js"></script>
     <!--end::Required Plugin(AdminLTE)--><!--begin::OverlayScrollbars Configure-->
     <script>
       const SELECTOR_SIDEBAR_WRAPPER = '.sidebar-wrapper';
@@ -163,4 +165,3 @@ include "login-validation.php";
   </body>
   <!--end::Body-->
 </html>
-
