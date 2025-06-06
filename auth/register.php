@@ -41,7 +41,7 @@ if(isset($_POST['confirm_password'])){
     }
 
     // Insert into database
-    $stmt = $conn->prepare("INSERT INTO users (username, nim_nip, email, notelp, password, role) VALUES (?, ?, ?, ?, ?)");
+    $stmt = $conn->prepare("INSERT INTO users (username, nim_nip, email, notelp, password, role) VALUES (?, ?, ?, ?, ?,?)");
     $stmt->bind_param("ssssss", $nama_lengkap, $nimnip, $email, $notelp, password_hash($password, PASSWORD_DEFAULT), $role);
 
     if ($stmt->execute()) {
