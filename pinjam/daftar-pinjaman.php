@@ -92,7 +92,7 @@ include "login-validation.php";
                       Tanggal Pinjam
                     </div>
                     <div class="col">
-                      : <?= date('d M Y', strtotime($data['tanggal_pinjam']))?>
+                      : <?= date('D, j M Y G:i:s', strtotime($data['tanggal_pinjam']))?>
                     </div>
                   </div>
 
