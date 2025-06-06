@@ -3,7 +3,7 @@ include "koneksi.php";
 include "login-validation.php";
 
 if (isset($_GET['id'])) {
-  $stmt = $conn->prepare("SELECT * FROM barang b JOIN kategori k ON b.id_kategori = k.id_kategori WHERE id_barang=? ");
+  $stmt = $conn->prepare("SELECT * FROM barang WHERE id_barang=? ");
   $stmt->bind_param("i", $_GET['id']);
   $stmt->execute();
   $result = $stmt->get_result();
@@ -124,7 +124,7 @@ if (isset($_GET['id'])) {
                       Kategori
                     </div>
                     <div class="col ">
-                      : <?= $data_barang["nama_kategori"]?>
+                      : <?= $data_barang["kategori"]?>
                     </div>
                   </div>
                   <div class="row mb-1">

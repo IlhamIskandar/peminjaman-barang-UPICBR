@@ -32,7 +32,7 @@ if (empty($img)) {
 }
 
 
-$stmt = $conn->prepare("UPDATE barang SET nama_barang=?, id_kategori=?, deskripsi=?, stok=?, img=?, tersedia=? WHERE id_barang = ?");
+$stmt = $conn->prepare("UPDATE barang SET nama_barang=?, kategori=?, deskripsi=?, stok=?, img=?, tersedia=? WHERE id_barang = ?");
 $stmt->bind_param("sssssss", $nama_barang, $kategori_barang, $deskripsi_barang, $stok, $img_name, $tersedia, $id_barang );
 
 

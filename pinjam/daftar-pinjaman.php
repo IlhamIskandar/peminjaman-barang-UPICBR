@@ -159,7 +159,7 @@ include "login-validation.php";
                     ?>
                   <div class="row">
                     <b>
-                      Catatan Peminjam
+                      Catatan Penolakan
                     </b>
                   </div>
                   <div class="row">

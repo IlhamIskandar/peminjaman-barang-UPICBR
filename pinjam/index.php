@@ -59,7 +59,7 @@ include "login-validation.php";
         <div class="app-content">
           <div class="container-fluid" id="dynamic-content">
                     <?php
-                    $stmt = $conn->prepare("SELECT * FROM barang b JOIN kategori k ON b.id_kategori = k.id_kategori");
+                    $stmt = $conn->prepare("SELECT * FROM barang");
                     $stmt->execute();
                     $result = $stmt->get_result();
                     while($data= mysqli_fetch_array($result)) {
@@ -75,7 +75,7 @@ include "login-validation.php";
                   </div>
                   <div class="row">
                      <p class="mb-1 text-muted">
-                      <?= $data["nama_kategori"]?>
+                      <?= $data["kategori"]?>
                      </p>
                   </div>
                   <div class="row">

@@ -102,14 +102,14 @@ if (isset($_GET['id'])) {
                   <div class="col-md-3 col-sm-12">
                     <label class="form-label">Kategori</label>
                     <select class="form-select" aria-label="Default select example" id="kategori" name="kategori" required>
-                      <option disabled>Pilih Kategori</option>
+                      <option value="<?= htmlspecialchars($data['kategori']) ?>"><?= htmlspecialchars($data['kategori']) ?></option>
                       <?php
                         $stmt = $conn->prepare("SELECT * FROM kategori");
                         $stmt->execute();
                         $result = $stmt->get_result();
                         while ($row = mysqli_fetch_array($result)) {
                           ?>
-                          <option value="<?= htmlspecialchars($row['id_kategori']) ?>" <?= $row['id_kategori'] == $data['id_kategori'] ? 'selected' : '' ?>>
+                          <option value="<?= htmlspecialchars($row['nama_kategori']) ?>" <?= $row['nama_kategori'] == $data['kategori'] ? 'selected' : '' ?>>
                           <?= htmlspecialchars($row['nama_kategori']) ?>
                           </option>
                           <?php

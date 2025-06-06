@@ -80,7 +80,7 @@ include "../admin-validation.php";
                   </thead>
                   <tbody>
                     <?php
-                    $stmt = $conn->prepare("SELECT * FROM barang b JOIN kategori k ON b.id_kategori = k.id_kategori");
+                    $stmt = $conn->prepare("SELECT * FROM barang b ");
                     $stmt->execute();
                     $result = $stmt->get_result();
                     $n = 1;
@@ -89,7 +89,7 @@ include "../admin-validation.php";
                     <tr>
                       <th><?= $n?></th>
                       <td><?= $data["nama_barang"]?></td>
-                      <td><?= $data["nama_kategori"]?></td>
+                      <td><?= $data["kategori"]?></td>
                       <td><?= $data["stok"]?></td>
                       <td><?= $data["tersedia"]?></td>
                       <td>

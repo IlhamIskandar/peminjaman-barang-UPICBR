@@ -91,7 +91,7 @@ include "../admin-validation.php";
                         $stmt->execute();
                         $result = $stmt->get_result();
                         while ($row = mysqli_fetch_array($result)) {
-                          echo '<option value="' . htmlspecialchars($row['id_kategori']) . '">' . htmlspecialchars($row['nama_kategori']) . '</option>';
+                          echo '<option value="' . htmlspecialchars($row['nama_kategori']) . '">' . htmlspecialchars($row['nama_kategori']) . '</option>';
                         }
                       ?>
                     </select>

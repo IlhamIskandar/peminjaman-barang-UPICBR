@@ -12,7 +12,7 @@ $target_dir = "../../image/barang/";
 $img_name = uniqid() . '.png'; // Generate a unique name for the image
 
 
-$stmt = $conn->prepare("INSERT INTO barang (nama_barang, id_kategori, deskripsi, stok, tersedia, img) VALUES (?, ?, ?, ?, ?)");
+$stmt = $conn->prepare("INSERT INTO barang (nama_barang, kategori, deskripsi, stok, tersedia, img) VALUES (?, ?, ?, ?, ?,?)");
 $stmt->bind_param("ssssss", $nama_barang, $kategori_barang, $deskripsi_barang, $stok, $stok, $img_name);
 
 if ($stmt->execute()) {
