@@ -116,8 +116,26 @@ if(isset($_POST['email']) && isset($_POST['password'])){
               <div class="input-group-text"><span class="bi bi-lock-fill"></span></div>
             </div>
             <!-- /.social-auth-links -->
-          <a class="small" href="register.php">Lupa kata sandi? Hubungi admin</a>
-              <!-- /.col -->
+            <a class="small" href="#" data-bs-toggle="modal" data-bs-target="#passModal">Lupa kata sandi? Hubungi admin</a>
+            <!-- Modal -->
+            <div class="modal fade" id="passModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                      <h1 class="modal-title fs-5" id="exampleModalLabel">Hubungi Admin</h1>
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                      Jika lupa kata sandi, silakan hubungi admin melalui WhatsApp pada nomor 08XXXXXXXXX untuk mengatur ulang kata sandi Anda.
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
+                    </div>
+                </div>
+              </div>
+            </div>
+            <!-- END Modal -->
+            <!-- /.col -->
               <div class="col-12">
                 <div class="d-grid gap-2 justify-content-end">
                   <button type="submit" class="btn btn-primary">Masuk</button>

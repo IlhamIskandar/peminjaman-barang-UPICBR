@@ -110,17 +110,32 @@ include "login-validation.php";
                     <?php
                   }
                   ?>
-
                   <?php
+                  if ($data['status'] == 'Dikembalikan') {
+                    ?>
+                  <div class="row">
+                    <div class="col-4 col-sm-4 col-lg-3 col-md-4">
+                      Waktu Pengembalian
+                    </div>
+                    <div class="col">
+                      : <?= date('D, j M Y G:i:s', strtotime($data['tanggal_kembali']))?>
+                    </div>
+                  </div>
+                    <?php
+                  }
+                  ?>
+                  <?php
+
                   if ($data['status'] == 'Dipinjam') {
                     $badgeClass = 'bg-success';
                   } elseif ($data['status'] == 'Ditolak') {
                     $badgeClass = 'bg-danger';
                   } else if ($data['status'] == 'Menunggu Pengambilan') {
                     $badgeClass = 'bg-warning';
+                  } else {
+                    $badgeClass = 'bg-primary';
                   }
                   ?>
-
                   <div class="row">
                     <div class="col-4 col-sm-4 col-lg-3 col-md-4">
                       Status

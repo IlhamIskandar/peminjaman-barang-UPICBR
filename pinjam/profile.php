@@ -132,7 +132,6 @@ if (mysqli_num_rows($result) > 0) {
                                     Ubah Password
                                   </button>
                                   <!-- END Button trigger modal -->
-                                    <a href="logout.php" class="btn btn-danger">Logout</a>
                                 </div>
                               </form>
                                 <!-- Modal -->
