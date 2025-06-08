@@ -1,6 +1,7 @@
 <?php
-include "../koneksi.php";
-include "../admin-validation.php";
+include "koneksi.php";
+include "login-validation.php";
+
 ?>
 
 <!doctype html>
@@ -22,7 +23,7 @@ include "../admin-validation.php";
       content="bootstrap 5, bootstrap, bootstrap 5 admin dashboard, bootstrap 5 dashboard, bootstrap 5 charts, bootstrap 5 calendar, bootstrap 5 datepicker, bootstrap 5 tables, bootstrap 5 datatable, vanilla js datatable, colorlibhq, colorlibhq dashboard, colorlibhq admin dashboard"
     />
     <!--end::Primary Meta Tags-->
-    <?php include "../partials/head.php"?>
+    <?php include "partials/head.php"?>
 
   </head>
   <body class="layout-fixed sidebar-expand-lg bg-body-tertiary">
@@ -31,12 +32,12 @@ include "../admin-validation.php";
       <!--begin::Header-->
       <nav class="app-header navbar navbar-expand bg-body">
         <!--begin::Container-->
-        <?php include "../partials/navbar.php"; ?>
+        <?php include "partials/navbar.php"; ?>
         <!--end::Container-->
       </nav>
       <!--end::Header-->
       <!--begin::Sidebar-->
-        <?php include "../partials/sidebar.php"; ?>
+        <?php include "partials/sidebar.php"; ?>
       <!--end::Sidebar-->
       <!--begin::App Main-->
       <main class="app-main">
@@ -46,7 +47,9 @@ include "../admin-validation.php";
           <div class="container-fluid">
             <!--begin::Row-->
             <div class="row">
-              <div class="col-sm-6"><h3 class="mb-0">Pengembalian Barang</h3></div>
+              <div class="col-sm-6"><h3 class="mb-0">Daftar Barang</h3></div>
+              <div class="col-sm-6">
+              </div>
             </div>
             <!--end::Row-->
           </div>
@@ -55,91 +58,63 @@ include "../admin-validation.php";
         <!--begin::App Content-->
         <div class="app-content">
           <div class="container-fluid" id="dynamic-content">
-            <div class="card">
-              <div class="card-body">
-                <table class="table table-bordered">
-                  <thead>
-                    <tr>
-                      <th>No</th>
-                      <th>Nama Barang</th>
-                      <th>Nama Peminjam</th>
-                      <th>NIM/NIP</th>
-                      <th>Telepon</th>
-                      <th>Email</th>
-                      <th>Waktu Peminjaman</th>
-                      <th>Batas Pengembalian</th>
-                      <th>Aksi</th>
-                    </tr>
-                  </thead>
-                  <tbody>
                     <?php
-                    $stmt = $conn->prepare("SELECT * FROM peminjaman p JOIN users u ON p.id_peminjam = u.id_user JOIN barang b ON p.id_barang = b.id_barang WHERE status='Dipinjam' ORDER BY p.tanggal_pinjam DESC");
+                    $stmt = $conn->prepare("SELECT * FROM barang");
                     $stmt->execute();
                     $result = $stmt->get_result();
-                    $n = 1;
                     while($data= mysqli_fetch_array($result)) {
                     ?>
-                    <tr>
-                      <th><?= $n?></th>
-                      <td><?= $data["nama_barang"]?></td>
-                      <td><?= $data["username"]?></td>
-                      <td><?= $data["nim_nip"]?></td>
-                      <td><?= $data["notelp"]?></td>
-                      <td><?= $data["email"]?></td>
-                      <td><?= $data["tanggal_pinjam"]?></td>
-                      <td><?= $data["batas_pengembalian"]?></td>
-                      <td>
-                        <!-- Modal -->
-                        <div class="modal fade" id="konfModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                          <div class="modal-dialog">
-                            <div class="modal-content">
-                              <form action="proses-konfirm.php" method="POST">
-                                <input type="hidden" name="id_peminjaman" value="<?= $data['id_peminjaman']?>">
-                                <div class="modal-header">
-                                  <h1 class="modal-title fs-5" id="exampleModalLabel">Konfirmasi Peminjaman</h1>
-                                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                </div>
-                                <div class="modal-body">
-                                  <p>
-                                    Apakah Anda yakin ingin mengkonfirmasi pengembalian barang <b><?= $data["nama_barang"]?></b> oleh <b><?= $data["username"]?></b>?
-                                  </p>
-                                  <b>Catatan</b>
-                                  <p>
-                                    Pastikan peminjam telah mengembalikan barang yang sesuai dengan data barang yang dipinjam sebelum melakukan konfirmasi pengembalian.
-                                  </p>
-                                </div>
-                                <div class="modal-footer">
-                                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
-                                  <button type="submit" class="btn btn-success">Konfirmasi</button>
-                                </div>
-                              </form>
-                            </div>
-                          </div>
-                        </div>
-                        <!-- END Modal -->
-
-                        <!-- Button trigger modal -->
-                        <button type="button" class="btn btn-success btn-sm align-content-center" data-bs-toggle="modal" data-bs-target="#konfModal">
-                          <i class="bi bi-check-lg bold"></i>
-                        </button>
-                        <!-- END Button trigger modal -->
-                         <a href="../laporan/detail-peminjaman.php?id=<?= $data['id_peminjaman'] ?>" class="btn btn-sm btn-primary" title="Detail Peminjaman">
-                          <i class="bi bi-eye"></i>
-                        </a>
-                      </td>
-                    </tr>
-                    <?php $n++;} ?>
-                  </tbody>
-                </table>
+            <div class="card mb-3">
+              <div class="row card-body ">
+                <div class="col-md-3 col-lg-2 col-sm-12 d-flex align-items-center">
+                  <img class="rounded mx-auto img-fluid" style="max-height: 20vh;" src="../image/barang/<?= $data['img']?>" alt="<?= $data['img']?>">
+                </div>
+                <div class="col">
+                  <div class="row">
+                    <h4 class="mb-0"><?= $data["nama_barang"]?></h4>
+                  </div>
+                  <div class="row">
+                     <p class="mb-1 text-muted">
+                      <?= $data["kategori"]?>
+                     </p>
+                  </div>
+                  <div class="row">
+                    <p>
+                      <?= $data["deskripsi"]?>
+                    </p>
+                  </div>
+                  <div class="row align-items-center">
+                    <div class="col-6">
+                      <p class="mb-0">
+                        <?php if ($data["tersedia"] > 0) {
+                          $badgeClass = "bg-success";
+                          $btnClass = "btn-primary";
+                          $btnText = "Pinjam";
+                          $btnDisabled = "";
+                        } else {
+                          $badgeClass = "bg-secondary";
+                          $btnClass = "btn-secondary disabled";
+                          $btnText = "Tidak Tersedia";
+                          $btnDisabled = "role='button' aria-disabled='true'";
+                        }?>
+                        Tersedia: <span class="badge <?= $badgeClass ?>"><?= $data["tersedia"]?></span>
+                      </p>
+                    </div>
+                    <div class="col-6 justify-content-end d-flex">
+                        <a href="barang.php?id=<?= $data['id_barang']?>" class="btn <?=$btnClass?>" <?=$btnDisabled?>><?=$btnText?></a>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
+                <?php } ?>
           </div>
         </div>
         <!--end::App Content-->
       </main>
       <!--end::App Main-->
       <!--begin::Footer-->
-      <?php include "../partials/footer.php"; ?>
+      <?php include "partials/footer.php"; ?>
       <!--end::Footer-->
     </div>
     <!--end::App Wrapper-->
@@ -163,7 +138,7 @@ include "../admin-validation.php";
       crossorigin="anonymous"
     ></script>
     <!--end::Required Plugin(Bootstrap 5)--><!--begin::Required Plugin(AdminLTE)-->
-    <script src="../../dist/js/adminlte.js"></script>
+    <script src="../dist/js/adminlte.js"></script>
     <!--end::Required Plugin(AdminLTE)--><!--begin::OverlayScrollbars Configure-->
     <script>
       const SELECTOR_SIDEBAR_WRAPPER = '.sidebar-wrapper';
@@ -199,3 +174,4 @@ include "../admin-validation.php";
   </body>
   <!--end::Body-->
 </html>
+

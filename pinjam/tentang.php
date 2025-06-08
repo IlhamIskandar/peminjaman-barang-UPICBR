@@ -1,7 +1,5 @@
 <?php
 include "koneksi.php";
-include "login-validation.php";
-
 ?>
 
 <!doctype html>
@@ -10,7 +8,7 @@ include "login-validation.php";
 
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>welcome</title>
+    <title>Tentang</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
@@ -30,26 +28,8 @@ include "login-validation.php";
 </head>
 
 <style>
-    .welcome-section {
-        padding: 100px 20px;
+    body {
         font-family: 'Poppins', sans-serif;
-        background: linear-gradient(to right, #f8f9fa, #e9ecef);
-    }
-
-    .welcome-section h1 {
-        font-weight: 600;
-        text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.1);
-    }
-
-    .welcome-section .btn-danger {
-        transition: all 0.3s ease-in-out;
-        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
-        border-radius: 0.8rem;
-    }
-
-    .welcome-section .btn-danger:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 6px 20px rgba(220, 53, 69, 0.4);
     }
 </style>
 
@@ -68,24 +48,48 @@ include "login-validation.php";
         <!--end::Sidebar-->
         <!--begin::App Main-->
         <main class="app-main">
-          <div class="container p-0" id="dynamic-content">
-            <!-- Kontennya -->
-            <section class="welcome-section text-center text-black" data-aos="fade-up" data-aos-duration="1200">
-                <div class="container">
-                    <h1 class="display-4 mb-3">Selamat datang di website Peminjaman Barang kami!</h1>
-                    <p class="lead mb-4">UPI Kampus Cibiru - Program Studi Teknik Komputer</p>
-                    <p class="text-muted">Akses lebih mudah untuk meminjam perlengkapan kampus kapan saja, di mana saja. Sistem ini dibuat agar mahasiswa dan staf bisa mengelola kebutuhan barang dengan cepat dan efisien.</p>
-                    <hr class="my-4 w-50 mx-auto">
-                    <a class="btn btn-danger btn-lg" href="tentang.php" role="button" data-aos="zoom-in" data-aos-delay="600">Pelajari Lebih Lanjut</a>
+            <!doctype html>
+            <div class="container my-5 text-center" data-aos="zoom-in" data-aos-delay="50">
+                <div class="row mb-4">
+                    <div class="col">
+                        <h2 class="fw-bold">Tentang</h2>
+                    </div>
                 </div>
-            </section>
 
+                <div class="row justify-content-center text-start fs-5">
+                    <div class="col-md-6 mb-3">
+                        <p class="text-muted">
+                            Website ini adalah sistem informasi peminjaman barang yang dibuat untuk membantu civitas akademika UPI Kampus Cibiru dalam memanfaatkan berbagai fasilitas kampus secara mudah dan efisien.
+                        </p>
+                        <p class="text-muted">
+                            Sistem ini dirancang agar pengguna dapat melihat daftar barang yang tersedia, mengajukan peminjaman, serta memantau statusnya tanpa perlu proses manual yang rumit.
+                        </p class="text-muted">
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <p class="text-muted">
+                            Jika barang yang dibutuhkan tidak tersedia, pengguna tetap bisa menghubungi kontak kami tentang kebutuhannya agar pengelola mengetahui permintaan tersebut — sehingga menjadi lebih responsif dan terorganisir.
+                        </p>
+                        <p class="text-muted">
+                            Sistem ini dibuat oleh mahasiswa untuk mahasiswa, sebagai bentuk kontribusi dalam membangun lingkungan kampus yang lebih tertib, transparan, dan mendukung kegiatan belajar-mengajar.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Kalimat penutup dan tombol -->
+                <div class="row mt-4">
+                    <div class="col">
+                        <p class="fw-semibold fs-5">
+                            Yuk, manfaatkan fasilitas kampus dengan bijak dan maksimal. Demi kenyamanan bersama, semua jadi lebih mudah dengan sistem ini!
+                        </p>
+                        <a class="btn btn-warning btn-lg mt-3" href="daftarbarang.php" role="button" data-aos="zoom-in" data-aos-delay="100">
+                            Pinjam Barang
+                        </a>
+                    </div>
+                </div>
+            </div>
             <!--begin::Footer-->
             <?php include "partials/footer.php"; ?>
             <!--end::Footer-->
-          </div>
-        </main>
-        <!--end::App Main-->
     </div>
     <!--end::App Wrapper-->
     <!--begin::Script-->

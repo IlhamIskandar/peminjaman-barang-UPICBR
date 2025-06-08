@@ -1,7 +1,5 @@
 <?php
 include "koneksi.php";
-include "login-validation.php";
-
 ?>
 
 <!doctype html>
@@ -10,7 +8,7 @@ include "login-validation.php";
 
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>welcome</title>
+    <title>staff</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
@@ -30,26 +28,39 @@ include "login-validation.php";
 </head>
 
 <style>
-    .welcome-section {
-        padding: 100px 20px;
+    .team-section {
         font-family: 'Poppins', sans-serif;
-        background: linear-gradient(to right, #f8f9fa, #e9ecef);
+        text-align: center;
+        padding: 60px 20px;
+        background-color: #f8f9fa;
     }
 
-    .welcome-section h1 {
+    .team-section h2 {
         font-weight: 600;
-        text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.1);
+        margin-bottom: 10px;
     }
 
-    .welcome-section .btn-danger {
-        transition: all 0.3s ease-in-out;
-        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
-        border-radius: 0.8rem;
+    .team-section p {
+        color: #555;
+        margin-bottom: 40px;
     }
 
-    .welcome-section .btn-danger:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 6px 20px rgba(220, 53, 69, 0.4);
+    .team-member {
+        margin-bottom: 30px;
+    }
+
+    .team-member img {
+        border-radius: 50%;
+        border: 4px solid #48D1CC;
+        width: 200px;
+        height: 200px;
+        object-fit: cover;
+        margin-bottom: 15px;
+    }
+
+    .team-member h5 {
+        font-weight: 600;
+        margin-top: 10px;
     }
 </style>
 
@@ -68,24 +79,33 @@ include "login-validation.php";
         <!--end::Sidebar-->
         <!--begin::App Main-->
         <main class="app-main">
-          <div class="container p-0" id="dynamic-content">
-            <!-- Kontennya -->
-            <section class="welcome-section text-center text-black" data-aos="fade-up" data-aos-duration="1200">
-                <div class="container">
-                    <h1 class="display-4 mb-3">Selamat datang di website Peminjaman Barang kami!</h1>
-                    <p class="lead mb-4">UPI Kampus Cibiru - Program Studi Teknik Komputer</p>
-                    <p class="text-muted">Akses lebih mudah untuk meminjam perlengkapan kampus kapan saja, di mana saja. Sistem ini dibuat agar mahasiswa dan staf bisa mengelola kebutuhan barang dengan cepat dan efisien.</p>
-                    <hr class="my-4 w-50 mx-auto">
-                    <a class="btn btn-danger btn-lg" href="tentang.php" role="button" data-aos="zoom-in" data-aos-delay="600">Pelajari Lebih Lanjut</a>
-                </div>
-            </section>
+            <!doctype html>
+
+               <div class="team-section">
+    <h2>Tim Kami</h2>
+    <p data-aos="zoom-in" data-aos-delay="50">Kenali lebih dekat tim hebat di balik layanan peminjaman barang UPI Cibiru!</p>
+
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-10 col-sm-6 col-md-4 team-member" data-aos="zoom-in-up" data-aos-delay="100">
+                <img src="ilham.jpg" alt="Ilham">
+                <h5>Muhammand Ilham Iskandar</h5>
+            </div>
+            <div class="col-10 col-sm-6 col-md-4 team-member" data-aos="zoom-in-up" data-aos-delay="300">
+                <img src="luqman.jpg" alt="Luqman">
+                <h5>Luqman Muhammad F. N. H</h5>
+            </div>
+            <div class="col-10 col-sm-6 col-md-4 team-member" data-aos="zoom-in-up" data-aos-delay="500">
+                <img src="vania.jpg" alt="Vania">
+                <h5>Vania Afiya R</h5>
+            </div>
+        </div>
+    </div>
+</div>
 
             <!--begin::Footer-->
             <?php include "partials/footer.php"; ?>
             <!--end::Footer-->
-          </div>
-        </main>
-        <!--end::App Main-->
     </div>
     <!--end::App Wrapper-->
     <!--begin::Script-->

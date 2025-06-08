@@ -152,6 +152,7 @@ $result = $stmt->get_result();
                       <th>Batas Pengembalian</th>
                       <th>Tanggal Kembali</th>
                       <th>Status</th>
+                      <th>Aksi</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -180,6 +181,11 @@ $result = $stmt->get_result();
                               echo "<span class='badge bg-danger'>Ditolak</span>";
                             }
                             ?>
+                          </td>
+                          <td>
+                            <a href="../laporan/detail-peminjaman.php?id=<?= $data['id_peminjaman'] ?>" class="btn btn-sm btn-primary" title="Detail Peminjaman">
+                              <i class="bi bi-eye"></i>
+                            </a>
                           </td>
                         </tr>
                     <?php

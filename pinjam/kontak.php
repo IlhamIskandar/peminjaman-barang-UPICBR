@@ -1,7 +1,5 @@
 <?php
 include "koneksi.php";
-include "login-validation.php";
-
 ?>
 
 <!doctype html>
@@ -10,8 +8,10 @@ include "login-validation.php";
 
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>welcome</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <title>kontak</title>
+    <!-- Font Awesome CDN -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
     <!--begin::Primary Meta Tags-->
@@ -29,27 +29,36 @@ include "login-validation.php";
 
 </head>
 
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
 <style>
-    .welcome-section {
-        padding: 100px 20px;
+    body {
         font-family: 'Poppins', sans-serif;
-        background: linear-gradient(to right, #f8f9fa, #e9ecef);
     }
 
-    .welcome-section h1 {
+    h2,
+    h4 {
         font-weight: 600;
-        text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.1);
     }
 
-    .welcome-section .btn-danger {
-        transition: all 0.3s ease-in-out;
-        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
-        border-radius: 0.8rem;
+    p,
+    a,
+    button,
+    .btn {
+        font-family: 'Poppins', sans-serif !important;
     }
 
-    .welcome-section .btn-danger:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 6px 20px rgba(220, 53, 69, 0.4);
+    .btn-lg i {
+        margin-right: 8px;
+    }
+
+    .btn-lg {
+        padding: 12px 24px;
+        font-weight: 500;
+        border-radius: 8px;
+    }
+
+    .text-center {
+        text-align: center;
     }
 </style>
 
@@ -68,24 +77,53 @@ include "login-validation.php";
         <!--end::Sidebar-->
         <!--begin::App Main-->
         <main class="app-main">
-          <div class="container p-0" id="dynamic-content">
-            <!-- Kontennya -->
-            <section class="welcome-section text-center text-black" data-aos="fade-up" data-aos-duration="1200">
-                <div class="container">
-                    <h1 class="display-4 mb-3">Selamat datang di website Peminjaman Barang kami!</h1>
-                    <p class="lead mb-4">UPI Kampus Cibiru - Program Studi Teknik Komputer</p>
-                    <p class="text-muted">Akses lebih mudah untuk meminjam perlengkapan kampus kapan saja, di mana saja. Sistem ini dibuat agar mahasiswa dan staf bisa mengelola kebutuhan barang dengan cepat dan efisien.</p>
-                    <hr class="my-4 w-50 mx-auto">
-                    <a class="btn btn-danger btn-lg" href="tentang.php" role="button" data-aos="zoom-in" data-aos-delay="600">Pelajari Lebih Lanjut</a>
+            <!-- Link Bootstrap Icons -->
+            <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+
+            <div class="container mt-5 p-0">
+                <h2 class="text-center mb-4" >Kontak Kami</h2>
+                <p class="text-center mb-4 text-muted" data-aos="zoom-in" data-aos-delay="50">Ada pertanyaan atau kendala? Jangan ragu untuk menghubungi kami melalui WhatsApp atau email!</p>
+                <p class="text-center mb-4 text-muted" data-aos="zoom-in" data-aos-delay="80">Kami juga akan senang menerima saran dan rekomendasi mu loh!</p>
+
+                <div class="row justify-content-center">
+                    <div class="col-md-6">
+
+                        <!-- Tombol WhatsApp -->
+                        <div class="mb-3 text-center">
+                            <a class="btn btn-success btn-lg me-2" href="https://wa.me/6281234567890" data-aos="zoom-in" data-aos-delay="100" target="_blank">
+                                <i class="bi bi-whatsapp"></i> WhatsApp
+                            </a>
+
+                            <!-- Tombol Email -->
+                            <a class="btn btn-danger btn-lg" href="https://mail.google.com/mail/?view=cm&fs=1&to=vaniaafiyar@upi.edu&su=Pertanyaan&body=Halo%20UPI%20Cibiru" data-aos="zoom-in" data-aos-delay="200" target="_blank">
+                                <i class="bi bi-envelope-fill"></i> Email
+                            </a>
+
+                        </div>
+
+                    </div>
                 </div>
-            </section>
+
+                <!-- Maps Lokasi -->
+                <!-- <div class="row justify-content-center">
+                    <div class="col-md-10">
+                        <h4 class="text-center mb-3" data-aos="zoom-in" data-aos-delay="300">Lokasi Kami</h4>
+                        <iframe
+                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3960.7662159688525!2d107.71618717499622!3d-6.918881667698456!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e68c3a0537975eb%3A0x27e96fd179d3fa45!2sUPI%20Kampus%20Cibiru!5e0!3m2!1sid!2sid!4v1717849473014!5m2!1sid!2sid"
+                            width="100%"
+                            height="400"
+                            style="border:0;"
+                            allowfullscreen=""
+                            loading="lazy"
+                            referrerpolicy="no-referrer-when-downgrade" data-aos="zoom-in" data-aos-delay="400">
+                        </iframe>
+                    </div>
+                </div> -->
+            </div>
 
             <!--begin::Footer-->
             <?php include "partials/footer.php"; ?>
             <!--end::Footer-->
-          </div>
-        </main>
-        <!--end::App Main-->
     </div>
     <!--end::App Wrapper-->
     <!--begin::Script-->

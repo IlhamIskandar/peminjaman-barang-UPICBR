@@ -46,7 +46,7 @@ include "../admin-validation.php";
           <div class="container-fluid">
             <!--begin::Row-->
             <div class="row">
-              <div class="col-sm-6"><h3 class="mb-0">Data Barang</h3></div>
+              <div class="col-sm-6"><h3 class="mb-0">Permintaan Peminjaman</h3></div>
             </div>
             <!--end::Row-->
           </div>
@@ -77,90 +77,96 @@ include "../admin-validation.php";
                     $stmt->execute();
                     $result = $stmt->get_result();
                     $n = 1;
-                    while($data= mysqli_fetch_array($result)) {
+                    while($data = mysqli_fetch_array($result)) {
+                        $konfModalId = "konfModal".$data['id_peminjaman'];
+                        $cancModalId = "cancModal".$data['id_peminjaman'];
                     ?>
                     <tr>
-                      <th><?= $n?></th>
-                      <td><?= $data["nama_barang"]?></td>
-                      <td><?= $data["username"]?></td>
-                      <td><?= $data["nim_nip"]?></td>
-                      <td><?= $data["notelp"]?></td>
-                      <td><?= $data["email"]?></td>
-                      <td><?= $data["tanggal_pinjam"]?></td>
-                      <td><?= $data["batas_pengembalian"]?></td>
-                      <td>
-                        <!-- Modal -->
-                        <div class="modal fade" id="konfModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                          <div class="modal-dialog">
-                            <div class="modal-content">
-                              <form action="proses-konfirm.php" method="POST">
-                                <input type="hidden" name="id_peminjaman" value="<?= $data['id_peminjaman']?>">
-                                <input type="hidden" name="id_peminjam" value="<?= $data['id_peminjam']?>">
-                                <div class="modal-header">
-                                  <h1 class="modal-title fs-5" id="exampleModalLabel">Konfirmasi Peminjaman</h1>
-                                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        <th><?= $n?></th>
+                        <td><?= $data["nama_barang"]?></td>
+                        <td><?= $data["username"]?></td>
+                        <td><?= $data["nim_nip"]?></td>
+                        <td><?= $data["notelp"]?></td>
+                        <td><?= $data["email"]?></td>
+                        <td><?= $data["tanggal_pinjam"]?></td>
+                        <td><?= $data["batas_pengembalian"]?></td>
+                        <td>
+                            <!-- Modal Konfirmasi -->
+                            <div class="modal fade" id="<?= $konfModalId ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <form action="proses-konfirm.php" method="POST">
+                                            <input type="hidden" name="id_peminjaman" value="<?= $data['id_peminjaman']?>">
+                                            <input type="hidden" name="id_peminjam" value="<?= $data['id_peminjam']?>">
+                                            <div class="modal-header">
+                                                <h1 class="modal-title fs-5" id="exampleModalLabel">Konfirmasi Peminjaman</h1>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <p>
+                                                    Apakah Anda yakin ingin mengkonfirmasi peminjaman barang <b><?= $data["nama_barang"]?></b> oleh <b><?= $data["username"]?></b>?
+                                                </p>
+                                                <b>Catatan</b>
+                                                <p>
+                                                    Pastikan peminjam mengambil barang yang sesuai dengan data barang yang dipinjam sebelum melakukan konfirmasi peminjaman.
+                                                </p>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                                                <button type="submit" class="btn btn-success">Konfirmasi</button>
+                                            </div>
+                                        </form>
+                                    </div>
                                 </div>
-                                <div class="modal-body">
-                                  <p>
-                                    Apakah Anda yakin ingin mengkonfirmasi peminjaman barang <b><?= $data["nama_barang"]?></b> oleh <b><?= $data["username"]?></b>?
-                                  </p>
-                                  <b>Catatan</b>
-                                  <p>
-                                    Pastikan peminjam mengambil barang yang sesuai dengan data barang yang dipinjam sebelum melakukan konfirmasi peminjaman.
-                                  </p>
-                                </div>
-                                <div class="modal-footer">
-                                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
-                                  <button type="submit" class="btn btn-success">Konfirmasi</button>
-                                </div>
-                              </form>
                             </div>
-                          </div>
-                        </div>
-                        <!-- END Modal -->
-                        <!-- Modal -->
-                        <div class="modal fade" id="cancModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                          <div class="modal-dialog">
-                            <div class="modal-content">
-                              <form action="proses-tolak.php" method="post">
-                                <div class="modal-header">
-                                  <h1 class="modal-title fs-5" id="exampleModalLabel">Tolak Peminjaman</h1>
-                                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            <!-- END Modal Konfirmasi -->
+
+                            <!-- Modal Tolak -->
+                            <div class="modal fade" id="<?= $cancModalId ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <form action="proses-tolak.php" method="post">
+                                            <div class="modal-header">
+                                                <h1 class="modal-title fs-5" id="exampleModalLabel">Tolak Peminjaman</h1>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <p>
+                                                    Apakah Anda yakin ingin menolak peminjaman barang <b><?= $data["nama_barang"]?></b> oleh <b><?= $data["username"]?></b>?
+                                                </p>
+                                                <div class="mb-3">
+                                                    <label for="alasan_tolak" class="form-label">Alasan Penolakan</label>
+                                                    <textarea class="form-control" id="alasan_tolak" name="alasan_tolak" rows="3" required></textarea>
+                                                </div>
+                                            </div>
+                                            <input type="hidden" name="id_peminjaman" value="<?= $data['id_peminjaman']?>">
+                                            <input type="hidden" name="id_peminjam" value="<?= $data['id_peminjam']?>">
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                                                <button type="submit" class="btn btn-danger">Tolak</button>
+                                            </div>
+                                        </form>
+                                    </div>
                                 </div>
-                                <div class="modal-body">
-                                  <p>
-                                    Apakah Anda yakin ingin menolak peminjaman barang <b><?= $data["nama_barang"]?></b> oleh <b><?= $data["username"]?></b>?
-                                  </p>
-                                  <div class="mb-3">
-                                    <label for="alasan_tolak" class="form-label">Alasan Penolakan</label>
-                                    <textarea class="form-control" id="alasan_tolak" name="alasan_tolak" rows="3" required></textarea>
-                                  </div>
-                                </div>
-                                <input type="hidden" name="id_peminjaman" value="<?= $data['id_peminjaman']?>">
-                                <input type="hidden" name="id_peminjam" value="<?= $data['id_peminjam']?>">
-                                <div class="modal-footer">
-                                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
-                                  <button type="submit" class="btn btn-danger">Tolak</button>
-                                </div>
-                              </form>
                             </div>
-                          </div>
-                        </div>
-                        <!-- END Modal -->
-                        <!-- Button trigger modal -->
-                        <button type="button" class="btn btn-success btn-sm align-content-center" data-bs-toggle="modal" data-bs-target="#konfModal">
-                          <i class="bi bi-check-lg bold"></i>
-                        </button>
-                        <!-- END Button trigger modal -->
-                         <!-- Button trigger modal -->
-                        <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#cancModal">
-                          <i class="bi bi-x-lg bold"></i>
-                        </button>
-                        <!-- END Button trigger modal -->
-                      </td>
+                            <!-- END Modal Tolak -->
+
+                            <!-- Button trigger modal -->
+                            <button type="button" class="btn btn-success btn-sm align-content-center" data-bs-toggle="modal" data-bs-target="#<?= $konfModalId ?>">
+                                <i class="bi bi-check-lg bold"></i>
+                            </button>
+
+                            <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#<?= $cancModalId ?>">
+                                <i class="bi bi-x-lg bold"></i>
+                            </button>
+
+                            <a href="../laporan/detail-peminjaman.php?id=<?= $data['id_peminjaman'] ?>" class="btn btn-sm btn-primary" title="Detail Peminjaman">
+                                <i class="bi bi-eye"></i>
+                            </a>
+                        </td>
                     </tr>
-                    <?php $n++;} ?>
-                  </tbody>
+                    <?php $n++; } ?>
+                </tbody>
                 </table>
               </div>
             </div>

@@ -1,7 +1,5 @@
 <?php
 include "koneksi.php";
-include "login-validation.php";
-
 ?>
 
 <!doctype html>
@@ -10,8 +8,9 @@ include "login-validation.php";
 
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>welcome</title>
+    <title>layanan</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
     <!--begin::Primary Meta Tags-->
@@ -30,26 +29,19 @@ include "login-validation.php";
 </head>
 
 <style>
-    .welcome-section {
-        padding: 100px 20px;
-        font-family: 'Poppins', sans-serif;
-        background: linear-gradient(to right, #f8f9fa, #e9ecef);
-    }
-
-    .welcome-section h1 {
-        font-weight: 600;
-        text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.1);
-    }
-
-    .welcome-section .btn-danger {
-        transition: all 0.3s ease-in-out;
+    .service-card {
+        transition: all 0.3s ease;
         box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
-        border-radius: 0.8rem;
+        border-radius: 1rem;
     }
 
-    .welcome-section .btn-danger:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 6px 20px rgba(220, 53, 69, 0.4);
+    .service-card:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+    }
+
+    .service-icon {
+        font-size: 2.5rem;
     }
 </style>
 
@@ -68,24 +60,50 @@ include "login-validation.php";
         <!--end::Sidebar-->
         <!--begin::App Main-->
         <main class="app-main">
-          <div class="container p-0" id="dynamic-content">
-            <!-- Kontennya -->
-            <section class="welcome-section text-center text-black" data-aos="fade-up" data-aos-duration="1200">
-                <div class="container">
-                    <h1 class="display-4 mb-3">Selamat datang di website Peminjaman Barang kami!</h1>
-                    <p class="lead mb-4">UPI Kampus Cibiru - Program Studi Teknik Komputer</p>
-                    <p class="text-muted">Akses lebih mudah untuk meminjam perlengkapan kampus kapan saja, di mana saja. Sistem ini dibuat agar mahasiswa dan staf bisa mengelola kebutuhan barang dengan cepat dan efisien.</p>
-                    <hr class="my-4 w-50 mx-auto">
-                    <a class="btn btn-danger btn-lg" href="tentang.php" role="button" data-aos="zoom-in" data-aos-delay="600">Pelajari Lebih Lanjut</a>
-                </div>
-            </section>
 
+            <!-- Konten -->
+            <div class="container my-5" style="font-family: 'Poppins', sans-serif;" data-aos="zoom-in" data-aos-delay="100">
+                <h2 class="text-center fw-bold mb-4">Layanan Kami</h2>
+
+                <!-- Baris Pertama -->
+                <div class="row justify-content-center g-4 mb-3 text-center">
+                    <div class="col-md-6">
+                        <div class="card service-card p-4 h-100">
+                            <i class="bi bi-box-seam service-icon text-warning mb-3"></i>
+                            <h5 class="fw-semibold">Peminjaman Barang</h5>
+                            <p class="text-muted">Pinjam perlengkapan kampus seperti tripod, proyektor, kabel HDMI, dan lainnya dengan mudah secara online.</p>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="card service-card p-4 h-100">
+                            <i class="bi bi-clock-history service-icon text-primary mb-3"></i>
+                            <h5 class="fw-semibold">Pantau Status</h5>
+                            <p class="text-muted">Lihat daftar barang yang tersedia dan pantau status peminjaman kamu kapan saja.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Baris Kedua -->
+                <div class="row justify-content-center g-4 text-center">
+                    <div class="col-md-6">
+                        <div class="card service-card p-4 h-100">
+                            <i class="bi bi-plus-circle service-icon text-success mb-3"></i>
+                            <h5 class="fw-semibold">Permintaan Barang</h5>
+                            <p class="text-muted">Butuh barang yang tidak tersedia? Hubungi kami melalui halaman <a href="kontak.php" class="text-decoration-none fw-semibold">kontak</a> untuk mengajukan permintaan.</p>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="card service-card p-4 h-100">
+                            <i class="bi bi-truck service-icon text-danger mb-3"></i>
+                            <h5 class="fw-semibold">Pick Up / Antar Barang</h5>
+                            <p class="text-muted">Barang bisa diambil langsung atau diantar ke ruanganmu. Isi catatan saat meminjam, atau hubungi kami langsung.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <!--begin::Footer-->
             <?php include "partials/footer.php"; ?>
             <!--end::Footer-->
-          </div>
-        </main>
-        <!--end::App Main-->
     </div>
     <!--end::App Wrapper-->
     <!--begin::Script-->

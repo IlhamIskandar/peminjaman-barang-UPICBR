@@ -126,7 +126,7 @@ $result = $stmt->get_result();
                             $status_badge = '<span class="badge bg-warning">Dipinjam</span>';
                             break;
                         case 'Dikembalikan':
-                            $status_badge = '<span class="badge bg-success">Kembali</span>';
+                            $status_badge = '<span class="badge bg-success">Dikembalikan</span>';
                             break;
                         case 'Menunggu Pengambilan':
                             $status_badge = '<span class="badge bg-secondary">Menunggu</span>';

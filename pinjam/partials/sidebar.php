@@ -29,7 +29,7 @@
             >
               <li class="nav-item">
                 <!-- <a href="#" class="nav-link" onclick="loadContent('Dashboard')"> -->
-                <a href="./" class="nav-link">
+                <a href="daftarbarang.php" class="nav-link">
                   <i class="nav-icon bi bi-speedometer"></i>
                   <p>Daftar Barang</p>
                 </a>
