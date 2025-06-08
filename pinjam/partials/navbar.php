@@ -83,7 +83,7 @@ $result = $stmt->get_result();
 
             <!--begin::User Menu Dropdown-->
             <li class="nav-item dropdown user-menu">
-              <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
+              <a href="profle.php" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
                 <img
                   src="../image/blank_profile.png"
                   class="user-image rounded-circle shadow"

@@ -115,11 +115,12 @@ if(isset($_POST['confirm_password'])){
   <body class="register-page bg-body-secondary">
     <div class="register-box">
       <div class="register-logo">
-        <a href="../index2.html"><b>Daftar</b></a>
+        <a href="#"><b>Peminjaman Barang</b></a>
       </div>
       <!-- /.register-logo -->
       <div class="card">
         <div class="card-body register-card-body">
+          <h4 class="text-center">Daftar</h4>
           <p class="register-box-msg">Sudah punya Akun?<a class="small" href="login.php">Masuk</a></p>
           <form action="" method="post">
             <div class="input-group mb-3">

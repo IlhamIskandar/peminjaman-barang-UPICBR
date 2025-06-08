@@ -140,7 +140,7 @@ if (isset($_GET['id'])) {
                   <div class="row align-items-center">
                     <div class="col-6">
                       <p class="mb-0">
-                        Tersedia: <span class="badge bg-success "><?= $data_barang["stok"]?></span>
+                        Tersedia: <span class="badge bg-success "><?= $data_barang["tersedia"]?></span>
                       </p>
                     </div>
                   </div>
@@ -187,7 +187,7 @@ if (isset($_GET['id'])) {
                       Tanggal Peminjaman
                     </div>
                     <div class="col">
-                      : <?= date('d-m-Y')?>
+                      : <?= date('d-m-Y G:i:s')?>
                     </div>
                   </div>
                   <div class="row mb-1">

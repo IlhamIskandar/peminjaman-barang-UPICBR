@@ -107,11 +107,12 @@ if(isset($_POST['email']) && isset($_POST['password'])){
   <body class="login-page bg-body-secondary">
     <div class="login-box">
       <div class="login-logo">
-        <a href="../index2.html"><b>Peminjaman Barang</b></a>
+        <a href="#"><b>Peminjaman Barang</b></a>
       </div>
       <!-- /.login-logo -->
       <div class="card">
         <div class="card-body login-card-body">
+          <h4 class="text-center">Login</h4>
           <p class="login-box-msg">Belum punya akun? <a class="small" href="register.php">Daftar</a></p>
           <form action="" method="post">
             <div class="input-group mb-3">
