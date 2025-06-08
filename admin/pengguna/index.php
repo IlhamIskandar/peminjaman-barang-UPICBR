@@ -77,7 +77,7 @@ include "../admin-validation.php";
                   </thead>
                   <tbody>
                     <?php
-                    $stmt = $conn->prepare("SELECT * FROM users b JOIN users k ON b.id_user = k.id_user WHERE b.active = 1");
+                    $stmt = $conn->prepare("SELECT * FROM users b JOIN users k ON b.id_user = k.id_user ");
                     $stmt->execute();
                     $result = $stmt->get_result();
                     $n = 1;
@@ -91,8 +91,14 @@ include "../admin-validation.php";
                       <td><?= $data["notelp"]?></td>
                       <td><?= $data["role"]?></td>
                       <td>
-                        <a href="detail-pengguna.php?id=<?= $data['id_user']?>" class="btn btn-warning"><i class="bi bi-pencil-square"></i></a>
-                        <a href="proses-hapus-pengguna.php?id=<?= $data['id_user']?>" class="btn btn-danger"><i class="bi bi-trash"></i></a>
+                        <a href="detail-pengguna.php?id=<?= $data['id_user']?>" class="btn btn-warning" data-bs-toggle="tooltip" title="Detail Pengguna"><i class="bi bi-pencil-square"></i></a>
+                        <?php
+                        if($data['active'] == 1) {
+                        ?>
+                        <a href="proses-hapus-pengguna.php?id=<?= $data['id_user']?>" class="btn btn-danger" data-bs-toggle="tooltip" title="Nonaktifkan Pengguna"><i class="bi bi-person-x-fill"></i></a>
+                        <?php } else { ?>
+                        <a href="proses-aktifkan-pengguna.php?id=<?= $data['id_user']?>" class="btn btn-success" data-bs-toggle="tooltip" title="Aktifkan Pengguna"><i class="bi bi-person-check-fill"></i></a>
+                        <?php } ?>
                       </td>
                     </tr>
                     <?php $n++;} ?>

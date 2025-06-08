@@ -13,13 +13,13 @@ if (isset($_GET['id'])) {
 
     if ($result->num_rows > 0) {
         // Hapus pengguna
-        $delete_stmt = $conn->prepare("Update users SET active = 0 WHERE id_user = ?");
+        $delete_stmt = $conn->prepare("Update users SET active = 1 WHERE id_user = ?");
         $delete_stmt->bind_param("i", $id_user);
 
         if ($delete_stmt->execute()) {
-            echo "<script>alert('Pengguna berhasil dinonaktifkan.'); window.location.href='index.php';</script>";
+            echo "<script>alert('Pengguna berhasil diaktifkan kembali.'); window.location.href='index.php';</script>";
         } else {
-            echo "<script>alert('Gagal menonaktifkan pengguna. Silakan coba lagi.'); window.location.href='index.php';</script>";
+            echo "<script>alert('Gagal mengaktifkan pengguna. Silakan coba lagi.'); window.location.href='index.php';</script>";
         }
     } else {
         echo "<script>alert('Pengguna tidak ditemukan.'); window.location.href='index.php';</script>";

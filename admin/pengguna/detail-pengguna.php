@@ -23,10 +23,11 @@ if (!$id_user) {
         $email = $_POST['email'];
         $telepon = $_POST['telepon'];
         $role = $_POST['role'];
+        $statusPengguna = isset($_POST['statusPengguna']) ? 1 : 0;
 
         // Update user data
-        $update_stmt = $conn->prepare("UPDATE users SET username=?, nim_nip=?, email=?, notelp=?, role=? WHERE id_user=?");
-        $update_stmt->bind_param("sssssi", $nama, $nimnip, $email, $telepon, $role, $id_user);
+        $update_stmt = $conn->prepare("UPDATE users SET username=?, nim_nip=?, email=?, notelp=?, role=?, active=? WHERE id_user=?");
+        $update_stmt->bind_param("sssssii", $nama, $nimnip, $email, $telepon, $role, $statusPengguna, $id_user);
 
         if ($update_stmt->execute()) {
             echo "<script>alert('Data pengguna berhasil diperbarui.'); window.location.href='';</script>";
@@ -125,6 +126,14 @@ if (!$id_user) {
                                     <option value="peminjam" <?= $data['role'] == 'peminjam' ? 'selected' : '' ?>>Peminjam</option>
                                   </select>
                                 </div>
+                                <!-- status pengguna -->
+                                 <div class="mb-4">
+                                  Status Pengguna:
+                                  <div class="form-check form-switch">
+                                    <input class="form-check-input" type="checkbox" id="statusPengguna" name="statusPengguna" <?= $data['active'] ? 'checked' : '' ?>>
+                                    <label class="form-check-label" for="statusPengguna" >
+                                      <?= $data['active'] ? 'Aktif' : 'Nonaktif' ?>
+                                 </div>
                                 <div class="d-flex gap-2">
                                   <button type="submit" class="btn btn-success">Simpan</button>
                                 </div>

@@ -22,24 +22,31 @@ if(isset($_POST['email']) && isset($_POST['password'])){
     $stmt->execute();
     $result = $stmt->get_result();
 
+
     if ($result->num_rows > 0) {
         // User exists, now verify the password
         $user = $result->fetch_assoc();
-        if (password_verify($password, $user['password'])) {
-            // Password is correct, set session variables
-            $_SESSION['role'] = $user['role'];
-            $_SESSION['username'] = $user['username'];
-            $_SESSION['id'] = $user['id_user'];
-            if ($_SESSION['role'] == 'admin') {
-                header("Location: ../admin/index.php");
-                return;
-            } elseif ($_SESSION['role'] == 'peminjam') {
-                header("Location: ../pinjam");
-                return;
+
+        if($user['active'] == 0) {
+            echo "<script>alert('Akun Anda Dinonaktifkan! Silakan hubungi admin.');</script>";
+          }else{
+            if (password_verify($password, $user['password'])) {
+              // Password is correct, set session variables
+              $_SESSION['role'] = $user['role'];
+              $_SESSION['username'] = $user['username'];
+              $_SESSION['id'] = $user['id_user'];
+              if ($_SESSION['role'] == 'admin') {
+                  header("Location: ../admin/index.php");
+                  return;
+              } elseif ($_SESSION['role'] == 'peminjam') {
+                  header("Location: ../pinjam");
+                  return;
+              }
+            } else {
+                echo "<script>alert('Password salah!');</script>";
             }
-        } else {
-            echo "<script>alert('Password salah!');</script>";
-        }
+          }
+
     } else {
         echo "<script>alert('Email tidak terdaftar!');</script>";
     }

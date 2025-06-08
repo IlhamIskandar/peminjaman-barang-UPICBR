@@ -104,7 +104,7 @@ $result = $stmt->get_result();
                 <li class="user-body">
                   <!--begin::Row-->
                   <div class="row">
-                    <div class="col text-center"><a href="#">Profile</a></div>
+                    <div class="col text-center"><a href="#">Profil</a></div>
                     <?php if ($_SESSION['role'] == 'admin') { ?>
                     <div class="col text-center"><a href="../admin/">Admin</a></div>
                     <?php } ?>
