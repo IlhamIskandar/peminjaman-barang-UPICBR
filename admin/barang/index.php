@@ -94,9 +94,35 @@ include "../admin-validation.php";
                       <td><?= $data["tersedia"]?></td>
                       <td>
                         <a href="ubah-barang.php?id=<?= $data['id_barang']?>" class="btn btn-warning"><i class="bi bi-pencil-square"></i></a>
-                        <a href="proses-hapus-barang.php?id=<?= $data['id_barang']?>" class="btn btn-danger"><i class="bi bi-trash"></i></a>
+                         <!-- Button trigger modal -->
+                          <button type="button" class="btn btn-danger align-content-center" title="Hapus Barang" data-bs-toggle="modal" data-bs-target="#hapus">
+                              <i class="bi bi-trash bold"></i>
+                          </button>
                       </td>
                     </tr>
+                    <!-- Modal Konfirmasi -->
+                            <div class="modal fade" id="hapus" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <form action="proses-konfirm.php" method="POST">
+                                            <div class="modal-header">
+                                                <h1 class="modal-title fs-5" id="exampleModalLabel">Konfirmasi Peminjaman</h1>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <p>
+                                                    Apakah Anda yakin ingin menghapus barang <strong><?= $data['nama_barang']?></strong>?
+                                                </p>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                                                <a href="proses-hapus-barang.php?id=<?= $data['id_barang']?>" class="btn btn-danger">Hapus</i></a>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- END Modal Konfirmasi -->
                     <?php $n++;} ?>
                   </tbody>
                 </table>
