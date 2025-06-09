@@ -93,13 +93,6 @@ include "login-validation.php";
                             <p class="text-muted">Butuh barang yang tidak tersedia? Hubungi kami melalui halaman <a href="kontak.php" class="text-decoration-none fw-semibold">kontak</a> untuk mengajukan permintaan.</p>
                         </div>
                     </div>
-                    <div class="col-md-6">
-                        <div class="card service-card p-4 h-100">
-                            <i class="bi bi-truck service-icon text-danger mb-3"></i>
-                            <h5 class="fw-semibold">Pick Up / Antar Barang</h5>
-                            <p class="text-muted">Barang bisa diambil langsung atau diantar ke ruanganmu. Isi catatan saat meminjam, atau hubungi kami langsung.</p>
-                        </div>
-                    </div>
                 </div>
             </div>
             <!--begin::Footer-->

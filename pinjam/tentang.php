@@ -28,11 +28,6 @@ include "login-validation.php";
 
 </head>
 
-<style>
-    body {
-        font-family: 'Poppins', sans-serif;
-    }
-</style>
 
 <body class="layout-fixed sidebar-expand-lg bg-body-tertiary">
     <!--begin::App Wrapper-->

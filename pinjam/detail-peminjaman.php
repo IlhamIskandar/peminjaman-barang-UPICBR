@@ -2,6 +2,45 @@
 include "koneksi.php";
 include "login-validation.php";
 
+include '../function.php';
+
+
+if(isset($_GET['id'])){
+    $id_peminjaman = $_GET['id'];
+    $query = "SELECT *
+              FROM peminjaman p
+              JOIN barang b ON p.id_barang = b.id_barang
+              JOIN users u ON p.id_peminjam = u.id_user
+              WHERE p.id_peminjaman = ?";
+    $stmt = $conn->prepare($query);
+    $stmt->bind_param("i", $id_peminjaman);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    if($result->num_rows > 0){
+        $data = $result->fetch_assoc();
+        $data_barang = [
+            'id_barang' => $data['id_barang'],
+            'nama_barang' => $data['nama_barang'],
+            'kategori' => $data['kategori'],
+            'deskripsi' => $data['deskripsi'],
+            'tersedia' => $data['tersedia'],
+            'img' => $data['img']
+        ];
+        $data_user = [
+            'id_user' => $data['id_peminjam'],
+            'username' => $data['username'],
+            'nim_nip' => $data['nim_nip'],
+            'email' => $data['email'],
+            'notelp' => $data['notelp']
+        ];
+    } else {
+        echo "<script>alert('Data peminjaman tidak ditemukan.'); history.back();</script>";
+        exit;
+    }
+
+}else{
+    echo "<script>alert('ID peminjaman tidak ditemukan.'); history.back();</script>";
+    exit;}
 ?>
 
 <!doctype html>
@@ -47,57 +86,116 @@ include "login-validation.php";
           <div class="container-fluid">
             <!--begin::Row-->
             <div class="row">
-              <div class="col-sm-6"><h3 class="mb-0">Peminjaman Anda</h3></div>
+              <div class="col-sm-6"><h3 class="mb-0">Laporan Peminjaman</h3></div>
               <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-end">
+                  <li class="breadcrumb-item"><button class="btn btn-link" onclick="history.back();">Kembali</button></li>
+                </ol>
               </div>
             </div>
             <!--end::Row-->
           </div>
           <!--end::Container-->
         </div>
-        <!--begin::App Content-->
         <div class="app-content">
           <div class="container-fluid" id="dynamic-content">
-                    <?php
-                    $stmt = $conn->prepare("SELECT * FROM peminjaman p JOIN users u ON p.id_peminjam = u.id_user JOIN barang b ON p.id_barang = b.id_barang WHERE p.id_peminjam = ? ORDER BY p.tanggal_pinjam DESC");
-                    $stmt->bind_param("i", $_SESSION['id']);
-                    $stmt->execute();
-                    $result = $stmt->get_result();
-                    while($data= mysqli_fetch_array($result)) {
-                    ?>
             <div class="card mb-3">
               <div class="row card-body ">
                 <div class="col-md-3 col-lg-2 col-sm-12 d-flex align-items-center">
-                  <img class="rounded mx-auto img-fluid" style="max-height: 20vh;" src="../image/barang/<?= $data['img']?>" alt="<?= $data['img']?>">
+                  <img class="rounded mx-auto img-fluid" style="" src="../image/barang/<?= $data_barang['img']?>" alt="<?= $data_barang['img']?>">
                 </div>
                 <div class="col">
                   <div class="row">
-                    <h4 class="mb-0"><?= $data["nama_barang"]?></h4>
+                    <h4 class="mb-1">Informasi Barang</h4>
                   </div>
-                  <div class="row">
-                     <p class="mb-1 text-muted">
-                      <?= $data["kategori"]?>
-                     </p>
-                  </div>
-                  <div class="row">
+                  <div class="row mb-1">
                     <div class="col-4 col-sm-4 col-lg-3 col-md-4">
-                      Nama Peminjam
+                      Nama Barang
                     </div>
                     <div class="col">
-                      : <?= $data['username']?>
+                      : <?= $data_barang["nama_barang"]?>
                     </div>
                   </div>
-                  <div class="row">
+                  <div class="row mb-1">
                     <div class="col-4 col-sm-4 col-lg-3 col-md-4">
-                      Tanggal Pinjam
+                      Kategori
+                    </div>
+                    <div class="col ">
+                      : <?= $data_barang["kategori"]?>
+                    </div>
+                  </div>
+                  <div class="row mb-1">
+                    <div class="col">
+                      Deskripsi Barang
+                      </div>
+                  </div>
+                  <div class="row mb-1">
+                    <div class="col">
+                      <?= $data_barang["deskripsi"]?>
+                    </div>
+                  </div>
+                  <hr>
+                  <div class="row mt-3">
+                    <div class="col-auto">
+                      <h4>Informasi Peminjaman</h4>
+                    </div>
+                    <div class="col">
+                      <?php
+                            if ($data['status'] == 'dipinjam') {
+                              echo "<span class='badge bg-warning'>Dipinjam</span>";
+                            } elseif ($data['status'] == 'Dikembalikan') {
+                              echo "<span class='badge bg-success'>Dikembalikan</span>";
+                            } else if($data['status'] == 'Menunggu Pengambilan') {
+                              echo "<span class='badge bg-secondary'>Menunggu Pengambilan</span>";
+                            } elseif ($data['status'] == 'Ditolak') {
+                              echo "<span class='badge bg-danger'>Ditolak</span>";
+                            }
+                            ?>
+                    </div>
+
+                  </div>
+                  <div class="row mb-1">
+                    <div class="col-4 col-sm-4 col-lg-3 col-md-4">
+                      Nama Pengguna
+                    </div>
+                    <div class="col">
+                      : <?= $data_user["username"]?>
+                    </div>
+                  </div>
+                  <div class="row mb-1">
+                    <div class="col-4 col-sm-4 col-lg-3 col-md-4">
+                      NIM/NIP
+                    </div>
+                    <div class="col">
+                      : <?= $data_user["nim_nip"]?>
+                    </div>
+                  </div>
+                  <div class="row mb-1">
+                    <div class="col-4 col-sm-4 col-lg-3 col-md-4">
+                      Email
+                    </div>
+                    <div class="col">
+                      : <?= $data_user["email"]?>
+                    </div>
+                  </div>
+                  <div class="row mb-1">
+                    <div class="col-4 col-sm-4 col-lg-3 col-md-4">
+                      Nomor Telepon
+                    </div>
+                    <div class="col">
+                      : <?= $data_user["notelp"]?>
+                    </div>
+                  </div>
+                  <div class="row mb-1">
+                    <div class="col-4 col-sm-4 col-lg-3 col-md-4">
+                      Tanggal Peminjaman
                     </div>
                     <div class="col">
                       : <?= date('D, j M Y G:i:s', strtotime($data['tanggal_pinjam']))?>
                     </div>
                   </div>
-
                   <?php
-                  if ($data['status'] == 'Dipinjam' || $data['status'] == 'Menunggu Pengambilan') {
+                   if ($data['status'] == 'Dipinjam' || $data['status'] == 'Menunggu Pengambilan') {
                     ?>
                   <div class="row">
                     <div class="col-4 col-sm-4 col-lg-3 col-md-4">
@@ -124,66 +222,21 @@ include "login-validation.php";
                     <?php
                   }
                   ?>
-                  <?php
-
-                  if ($data['status'] == 'Dipinjam') {
-                    $badgeClass = 'bg-success';
-                  } elseif ($data['status'] == 'Ditolak') {
-                    $badgeClass = 'bg-danger';
-                  } else if ($data['status'] == 'Menunggu Pengambilan') {
-                    $badgeClass = 'bg-warning';
-                  } else {
-                    $badgeClass = 'bg-primary';
-                  }
-                  ?>
-                  <div class="row">
-                    <div class="col-4 col-sm-4 col-lg-3 col-md-4">
-                      Status
+                    <div class="col-12">
+                      <b>Catatan Peminjam</b>
                     </div>
-                    <div class="col">
-                      : <span class="badge <?= $badgeClass ?>"><?= $data['status'] ?></span>
-                    </div>
-                  </div>
-                  <div class="row">
-                    <b>
-                      Catatan Peminjam
-                    </b>
-                  </div>
-                  <div class="row">
-                    <div class="input-group ">
+                    <div class="row mb-1">
+                      <div class="input-group mb-3">
                         <?= $data['catatan'] == ''? 'TIdak Ada Catatan': $data['catatan'];?>
                       </div>
-                  </div>
-                  <?php
-                  if ($data['status'] == 'Ditolak') {
-                    ?>
-                  <div class="row">
-                    <b>
-                      Catatan Penolakan
-                    </b>
-                  </div>
-                  <div class="row">
-                    <div class="input-group mb-3 ">
-                        <?= $data['alasan'] == ''? 'TIdak Ada': $data['alasan'];?>
-                      </div>
-                  </div>
-                    <?php
-                  }
-                  ?>
-                  <div class="row justify-content-end">
-                    <div class="col-auto">
-                      <a href="./detail-peminjaman.php?id=<?= $data['id_peminjaman'] ?>" class="btn btn-sm btn-primary">
-                        <i class="bi bi-eye"></i> Detail
-                      </a>
+                    </div>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
-                <?php } ?>
           </div>
         </div>
-        <!--end::App Content-->
       </main>
       <!--end::App Main-->
       <!--begin::Footer-->
