@@ -38,13 +38,6 @@ include "login-validation.php";
         font-weight: 600;
     }
 
-    p,
-    a,
-    button,
-    .btn {
-        font-family: 'Poppins', sans-serif !important;
-    }
-
     .btn-lg i {
         margin-right: 8px;
     }
