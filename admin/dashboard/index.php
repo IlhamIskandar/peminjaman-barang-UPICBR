@@ -272,7 +272,7 @@ $status_data = [
                                             </span>
                                         </td>
                                         <td>
-                                            <a href="detail-peminjaman.php?id=<?= $row['id_peminjaman'] ?>" class="btn btn-sm btn-primary">
+                                            <a href="../laporan/detail-peminjaman.php?id=<?= $row['id_peminjaman'] ?>" class="btn btn-sm btn-primary">
                                                 <i class="bi bi-eye"></i> Detail
                                             </a>
                                         </td>
