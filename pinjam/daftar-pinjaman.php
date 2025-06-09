@@ -64,6 +64,7 @@ include "login-validation.php";
                     $stmt->execute();
                     $result = $stmt->get_result();
                     while($data= mysqli_fetch_array($result)) {
+                      $cancModalId = "cancModal".$data['id_peminjaman'];
                     ?>
             <div class="card mb-3">
               <div class="row card-body ">
@@ -172,9 +173,45 @@ include "login-validation.php";
                   ?>
                   <div class="row justify-content-end">
                     <div class="col-auto">
+                    <?php
+                    if ($data['status'] == 'Menunggu Pengambilan') {
+                      $cancModalId = "cancModal".$data['id_peminjaman'];
+                    ?>
+                      <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#<?= $cancModalId ?>" title="Batalkan Peminjaman">
+                          <i class="bi bi-x-lg bold"></i>
+                      </button>
+                    <?php
+                    };
+                    ?>
                       <a href="./detail-peminjaman.php?id=<?= $data['id_peminjaman'] ?>" class="btn btn-sm btn-primary">
                         <i class="bi bi-eye"></i> Detail
                       </a>
+                      <!-- Modal Tolak -->
+                            <div class="modal fade" id="<?= $cancModalId ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h1 class="modal-title fs-5" id="exampleModalLabel">Tolak Peminjaman</h1>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <p>
+                                                    Apakah Anda yakin ingin membatalkan peminjaman barang <b><?= $data["nama_barang"]?></b>?
+                                                </p>
+                                                <div class="mb-3">
+
+                                            </div>
+                                            <input type="hidden" name="id_peminjaman" value="<?= $data['id_peminjaman']?>">
+                                            <input type="hidden" name="id_peminjam" value="<?= $data['id_peminjam']?>">
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
+                                                <a href="batalkan-pinjaman.php?id=<?= $data['id_peminjaman'] ?>" class="btn btn-danger">Batalkan</a>
+                                            </div>
+                                    </div>
+                                </div>
+                            </div>
+                          </div>
+                          <!-- END Modal Tolak -->
                     </div>
                   </div>
                 </div>

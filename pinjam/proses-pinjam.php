@@ -42,7 +42,7 @@ if(isset($_POST)){
         echo "
           <script>
           alert('Peminjaman Berhasil Dibuat. Silahkan Ambil Barang di Tempat Peminjaman!');
-          window.location.href='index.php';
+          window.location.href='daftar-pinjaman.php';
           </script>";
       }
     }
