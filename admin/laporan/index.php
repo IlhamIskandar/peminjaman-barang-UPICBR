@@ -171,10 +171,10 @@ $result = $stmt->get_result();
                           <td><?= htmlspecialchars($data['tanggal_kembali']) ?></td>
                           <td>
                             <?php
-                            if ($data['status'] == 'dipinjam') {
+                            if ($data['status'] == 'Dipinjam') {
                               echo "<span class='badge bg-warning'>Dipinjam</span>";
                             } elseif ($data['status'] == 'Dikembalikan') {
-                              echo "<span class='badge bg-success'>Kembali</span>";
+                              echo "<span class='badge bg-success'>Dikembalikan</span>";
                             } else if($data['status'] == 'Menunggu Pengambilan') {
                               echo "<span class='badge bg-secondary'>Menunggu Pengambilan</span>";
                             } elseif ($data['status'] == 'Ditolak') {

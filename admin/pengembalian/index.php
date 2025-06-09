@@ -71,15 +71,16 @@ include "../admin-validation.php";
                       <th>Aksi</th>
                     </tr>
                   </thead>
-                  <tbody>
-                    <?php
-                    $stmt = $conn->prepare("SELECT * FROM peminjaman p JOIN users u ON p.id_peminjam = u.id_user JOIN barang b ON p.id_barang = b.id_barang WHERE status='Dipinjam' ORDER BY p.tanggal_pinjam DESC");
-                    $stmt->execute();
-                    $result = $stmt->get_result();
-                    $n = 1;
-                    while($data= mysqli_fetch_array($result)) {
-                    ?>
-                    <tr>
+                 <tbody>
+                  <?php
+                  $stmt = $conn->prepare("SELECT * FROM peminjaman p JOIN users u ON p.id_peminjam = u.id_user JOIN barang b ON p.id_barang = b.id_barang WHERE status='Dipinjam' ORDER BY p.tanggal_pinjam DESC");
+                  $stmt->execute();
+                  $result = $stmt->get_result();
+                  $n = 1;
+                  while($data = mysqli_fetch_array($result)) {
+                      $modalId = "konfModal".$data['id_peminjaman']; // Membuat ID unik untuk setiap modal
+                  ?>
+                  <tr>
                       <th><?= $n?></th>
                       <td><?= $data["nama_barang"]?></td>
                       <td><?= $data["username"]?></td>
@@ -89,47 +90,47 @@ include "../admin-validation.php";
                       <td><?= $data["tanggal_pinjam"]?></td>
                       <td><?= $data["batas_pengembalian"]?></td>
                       <td>
-                        <!-- Modal -->
-                        <div class="modal fade" id="konfModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                          <div class="modal-dialog">
-                            <div class="modal-content">
-                              <form action="proses-konfirm.php" method="POST">
-                                <input type="hidden" name="id_peminjaman" value="<?= $data['id_peminjaman']?>">
-                                <div class="modal-header">
-                                  <h1 class="modal-title fs-5" id="exampleModalLabel">Konfirmasi Peminjaman</h1>
-                                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                </div>
-                                <div class="modal-body">
-                                  <p>
-                                    Apakah Anda yakin ingin mengkonfirmasi pengembalian barang <b><?= $data["nama_barang"]?></b> oleh <b><?= $data["username"]?></b>?
-                                  </p>
-                                  <b>Catatan</b>
-                                  <p>
-                                    Pastikan peminjam telah mengembalikan barang yang sesuai dengan data barang yang dipinjam sebelum melakukan konfirmasi pengembalian.
-                                  </p>
-                                </div>
-                                <div class="modal-footer">
-                                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
-                                  <button type="submit" class="btn btn-success">Konfirmasi</button>
-                                </div>
-                              </form>
-                            </div>
+                          <!-- Modal -->
+                          <div class="modal fade" id="<?= $modalId ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                              <div class="modal-dialog">
+                                  <div class="modal-content">
+                                      <form action="proses-konfirm.php" method="POST">
+                                          <input type="hidden" name="id_peminjaman" value="<?= $data['id_peminjaman']?>">
+                                          <div class="modal-header">
+                                              <h1 class="modal-title fs-5" id="exampleModalLabel">Konfirmasi Pengembalian</h1>
+                                              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                          </div>
+                                          <div class="modal-body">
+                                              <p>
+                                                  Apakah Anda yakin ingin mengkonfirmasi pengembalian barang <b><?= $data["nama_barang"]?></b> oleh <b><?= $data["username"]?></b>?
+                                              </p>
+                                              <b>Catatan</b>
+                                              <p>
+                                                  Pastikan peminjam telah mengembalikan barang yang sesuai dengan data barang yang dipinjam sebelum melakukan konfirmasi pengembalian.
+                                              </p>
+                                          </div>
+                                          <div class="modal-footer">
+                                              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                                              <button type="submit" class="btn btn-success">Konfirmasi</button>
+                                          </div>
+                                      </form>
+                                  </div>
+                              </div>
                           </div>
-                        </div>
-                        <!-- END Modal -->
+                          <!-- END Modal -->
 
-                        <!-- Button trigger modal -->
-                        <button type="button" class="btn btn-success btn-sm align-content-center" data-bs-toggle="modal" data-bs-target="#konfModal">
-                          <i class="bi bi-check-lg bold"></i>
-                        </button>
-                        <!-- END Button trigger modal -->
-                         <a href="../laporan/detail-peminjaman.php?id=<?= $data['id_peminjaman'] ?>" class="btn btn-sm btn-primary" title="Detail Peminjaman">
-                          <i class="bi bi-eye"></i>
-                        </a>
+                          <!-- Button trigger modal -->
+                          <button type="button" class="btn btn-success btn-sm align-content-center" data-bs-toggle="modal" data-bs-target="#<?= $modalId ?>">
+                              <i class="bi bi-check-lg bold"></i>
+                          </button>
+                          <!-- END Button trigger modal -->
+                          <a href="../laporan/detail-peminjaman.php?id=<?= $data['id_peminjaman'] ?>" class="btn btn-sm btn-primary" title="Detail Peminjaman">
+                              <i class="bi bi-eye"></i>
+                          </a>
                       </td>
-                    </tr>
-                    <?php $n++;} ?>
-                  </tbody>
+                  </tr>
+                  <?php $n++; } ?>
+              </tbody>
                 </table>
               </div>
             </div>
